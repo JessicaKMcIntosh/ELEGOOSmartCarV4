@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "*.sh": "shellscript",
+    "xlocale": "cpp",
+    "memory": "cpp",
+    "array": "cpp",
+    "deque": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp",
+    "vector": "cpp",
+    "string_view": "cpp",
+    "initializer_list": "cpp",
+    "*.tcc": "cpp"
+  }
+}
