@@ -51,7 +51,7 @@ delay_xxx(uint16_t _ms)
   }
 }
 
-/*运动方向控制序列*/
+/*运动方向控制序列 - Motion direction control sequence*/
 enum SmartRobotCarMotionControl
 {
   Forward,       //(1)
@@ -65,7 +65,7 @@ enum SmartRobotCarMotionControl
   stop_it        //(9)
 };               //direction方向:（1）、（2）、 （3）、（4）、（5）、（6）
 
-/*模式控制序列*/
+/*模式控制序列 - Mode control sequence*/
 enum SmartRobotCarFunctionalModel
 {
   Standby_mode,           /*空闲模式*/
@@ -87,7 +87,7 @@ enum SmartRobotCarFunctionalModel
 
 };
 
-/*控制管理成员*/
+/*控制管理成员 - Mode control sequence*/
 struct Application_xxx
 {
   SmartRobotCarMotionControl Motion_Control;
@@ -117,7 +117,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Init(void)
   Application_SmartRobotCarxxx0.Functional_Mode = Standby_mode;
 }
 
-/*ITR20001 检测小车是否离开地面*/
+/*ITR20001 检测小车是否离开地面 - Check whether the car leaves the ground*/
 static bool ApplicationFunctionSet_SmartRobotCarLeaveTheGround(void)
 {
   if (AppITR20001.DeviceDriverSet_ITR20001_getAnaloguexxx_R() > Application_FunctionSet.TrackingDetection_V &&
@@ -140,6 +140,14 @@ static bool ApplicationFunctionSet_SmartRobotCarLeaveTheGround(void)
   speed：输入速度 （0--255）
   Kp：位置误差放大比例常数项（提高位置回复状态的反映，输入时根据不同的运动工作模式进行修改）
   UpperLimit：最大输出控制量上限
+
+  Google Translate:
+  Linear motion control:
+  direction: direction selection front/back
+  directionRecord: direction record (acting to update the direction and position data when entering the function for the first time, namely: yaw yaw)
+  speed: input speed (0--255)
+  Kp: Position error amplification proportional constant item (improve the reflection of the position return state, and modify it according to different motion work modes when input)
+  UpperLimit: the upper limit of the maximum output control amount
 */
 static void ApplicationFunctionSet_SmartRobotCarLinearMotionControl(SmartRobotCarMotionControl direction, uint8_t directionRecord, uint8_t speed, uint8_t Kp, uint8_t UpperLimit)
 {
@@ -194,6 +202,11 @@ static void ApplicationFunctionSet_SmartRobotCarLinearMotionControl(SmartRobotCa
   运动控制:
   1# direction方向:前行（1）、后退（2）、 左前（3）、右前（4）、后左（5）、后右（6）
   2# speed速度(0--255)
+
+  Google Translate:
+  sport control:
+  1# direction: forward (1), backward (2), left front (3), right front (4), back left (5), back right (6)
+  2# speed (0--255)
 */
 static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotionControl direction, uint8_t is_speed)
 {
@@ -202,6 +215,14 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
   uint8_t Kp, UpperLimit;
   uint8_t speed = is_speed;
   //需要进行直线运动调整的控制模式（在以下工作运动模式小车前后方向运动时容易产生位置偏移，运动达不到相对直线方向的效果，因此需要加入控制调节）
+/*
+    Google Translate
+    The control mode that needs linear motion adjustment
+    (in the following work motion modes, the car is prone to position
+    deviation when moving forward and backward, and the motion cannot
+    achieve the effect of the relative linear direction, so control
+    adjustment is required)
+*/
   switch (Application_SmartRobotCarxxx0.Functional_Mode)
   {
   case Rocker_mode:
@@ -241,6 +262,7 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
     }
     else
     { //前进时进入方向位置逼近控制环处理
+      //Enter the direction and position approach control loop processing when advancing
       ApplicationFunctionSet_SmartRobotCarLinearMotionControl(Forward, directionRecord, speed, Kp, UpperLimit);
       directionRecord = 1;
     }
@@ -255,6 +277,7 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
     }
     else
     { //后退时进入方向位置逼近控制环处理
+      //Enter the direction position approach control loop processing when retreating
       ApplicationFunctionSet_SmartRobotCarLinearMotionControl(Backward, directionRecord, speed, Kp, UpperLimit);
       directionRecord = 2;
     }
@@ -309,21 +332,28 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
   }
 }
 /*
- 传感器数据更新:局部更新(选择性更新)
+  传感器数据更新:局部更新(选择性更新)
+
+  Google Translate:
+  Sensor data update: partial update (selective update)
 */
 void ApplicationFunctionSet::ApplicationFunctionSet_SensorDataUpdate(void)
 {
   { /*电压状态更新*/
+    // Voltage status update
     static unsigned long VoltageData_time = 0;
     static int VoltageData_number = 1;
-    if (millis() - VoltageData_time > 10) //10ms 采集并更新一次
+    //10ms 采集并更新一次 - 10ms acquisition and update once
+    if (millis() - VoltageData_time > 10)
     {
       VoltageData_time = millis();
       VoltageData_V = AppVoltage.DeviceDriverSet_Voltage_getAnalogue();
       if (VoltageData_V < VoltageDetection)
       {
         VoltageData_number++;
-        if (VoltageData_number == 500) //连续性多次判断最新的电压值...
+        //连续性多次判断最新的电压值...
+        // Continuity to determine the latest voltage value multiple times...
+        if (VoltageData_number == 500)
         {
           VoltageDetectionStatus = true;
           VoltageData_number = 0;
@@ -337,11 +367,12 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SensorDataUpdate(void)
   }
 
   // { /*避障状态更新*/
+  //   Obstacle avoidance status update
   //   AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&UltrasoundData_cm /*out*/);
   //   UltrasoundDetectionStatus = function_xxx(UltrasoundData_cm, 0, ObstacleDetection);
   // }
 
-  { /*R循迹状态更新*/
+  { /*R循迹状态更新 - R tracking status update*/
     TrackingData_R = AppITR20001.DeviceDriverSet_ITR20001_getAnaloguexxx_R();
     TrackingDetectionStatus_R = function_xxx(TrackingData_R, TrackingDetection_S, TrackingDetection_E);
     TrackingData_M = AppITR20001.DeviceDriverSet_ITR20001_getAnaloguexxx_M();
@@ -349,6 +380,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SensorDataUpdate(void)
     TrackingData_L = AppITR20001.DeviceDriverSet_ITR20001_getAnaloguexxx_L();
     TrackingDetectionStatus_L = function_xxx(TrackingData_L, TrackingDetection_S, TrackingDetection_E);
     //ITR20001 检测小车是否离开地面
+    // ITR20001 detects whether the car is off the ground
     ApplicationFunctionSet_SmartRobotCarLeaveTheGround();
   }
 
@@ -362,6 +394,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SensorDataUpdate(void)
 }
 /*
   开机动作需求：
+  Boot action requirements:
 */
 void ApplicationFunctionSet::ApplicationFunctionSet_Bootup(void)
 {
@@ -730,9 +763,9 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Follow(void)
 
       if (timestamp == 3)
       {
-        if (Position_Servo_xx != Position_Servo) //作用于舵机：避免循环执行
+        if (Position_Servo_xx != Position_Servo) //作用于舵机：避免循环执行 - Acting on the steering gear: avoid loop execution
         {
-          Position_Servo_xx = Position_Servo; //作用于舵机：转向角记录
+          Position_Servo_xx = Position_Servo; //作用于舵机：转向角记录 - Acting on the steering gear: steering angle record
 
           if (Position_Servo == 1)
           {
@@ -1744,7 +1777,8 @@ void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
     }
   }
 }
-/*串口数据解析*/
+
+/*串口数据解析 - Mode control sequence*/
 void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 {
   static String SerialPortData = "";
@@ -1958,7 +1992,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         Serial.print("{ok}");
 #endif
         break;
-      case 102: /*<命令：N 102> :摇杆控制命令*/
+      case 102: /*<命令：N 102> :摇杆控制命令 - Joystick control command */
         Application_SmartRobotCarxxx0.Functional_Mode = Rocker_mode;
         Rocker_temp = doc["D1"];
 
