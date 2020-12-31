@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:uno",
-    "sketch": "SmartRobotCarV4.0_20201218.ino",
+    "sketch": "ELEGOOSmartCarV4.ino",
     "port": "COM7",
     "programmer": "AVRISP mkII"
 }
