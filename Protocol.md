@@ -9,10 +9,13 @@ included in the download file.
 
 Commands and responses are JSON.
 
+**NOTE:** The `"H": "ID"` parameter must always be given as a string.
+For example `"H": "123"`.
+
 ## Motor
 
 * **Function:** Select the motor to set the rotation direction and speed.
-  * **Command:** `{ "H": ID , "N": 1 , "D1": MOTOR , "D2": SPEED , "D3": DIRECTION }`
+  * **Command:** `{ "H": "ID" , "N": 1 , "D1": MOTOR , "D2": SPEED , "D3": DIRECTION }`
   * **Return:** `{ID_ok}`
   * **Parameters:**
     * **MOTOR:** Select the corresponding motor.
@@ -26,7 +29,7 @@ Commands and responses are JSON.
       * **2** - Counterclockwise
 
 * **Function:** Set the direction and speed of the car.
-  * **Command:** `{ "H": ID , "N": 3 , "D1": DIRECTION , "D2" : SPEED }`
+  * **Command:** `{ "H": "ID" , "N": 3 , "D1": DIRECTION , "D2" : SPEED }`
   * **Return:** `{ID_ok}`
   * **Parameters:**
     * **DIRECTION:** The rotation direction of the selected motor.
@@ -38,7 +41,7 @@ Commands and responses are JSON.
       * The range of speed value: 0 ~ 255
 
 * **Function:** Set the speed of the left and right motors separately.
-  * **Command:** `{ "H": ID , "N": 4 , "D1": LEFT_SPEED , "D2" : RIGHT_SPEED }`
+  * **Command:** `{ "H": "ID" , "N": 4 , "D1": LEFT_SPEED , "D2" : RIGHT_SPEED }`
   * **Return:** `{ID_ok}`
   * **Parameters:**
     * **LEFT_SPEED** - The speed of left wheel.
@@ -49,7 +52,7 @@ Commands and responses are JSON.
 ## Servo motor
 
 * **Function:** Select the rotation angle of the servo motor.
-  * **Command:** `{ "H": ID , "N": 5 , "D1": SERVO , "D2" : ANGLE }`
+  * **Command:** `{ "H": "ID" , "N": 5 , "D1": SERVO , "D2" : ANGLE }`
   * **Return:** `{ID_ok}`
   * **Parameters:**
     * **SERVO** - Select the servo motor.
@@ -57,14 +60,14 @@ Commands and responses are JSON.
       * **2** - Servo motor that can turn up and down.
     * **ANGLE** - The rotation angle of the servo motor: 0-180.
   * **Examples:**
-    * **Send:** `{ "H": 1 , "N": 5 , "D1": 1 , "D2" : 0 }`
-      * **Receive:** `_ok}`
+    * **Send:** `{ "H": "1", "N": 5 , "D1": 1 , "D2" : 0 }`
+      * **Receive:** `{1_ok}`
       * **Action:** Head rotates all the way to the right.
-    * **Send:** `{ "H": 1 , "N": 5 , "D1": 1 , "D2" :  180}`
-      * **Receive:** `_ok}`
+    * **Send:** `{ "H": "1", "N": 5 , "D1": 1 , "D2" :  180}`
+      * **Receive:** `{1_ok}`
       * **Action:** Head rotates all the way to the Left.
-    * **Send:** `{ "H": 1 , "N": 5 , "D1": 1 , "D2" : 90 }`
-      * **Receive:** `_ok}`
+    * **Send:** `{ "H": "1", "N": 5 , "D1": 1 , "D2" : 90 }`
+      * **Receive:** `{1_ok}`
       * **Action:** Head rotates to the center.
 
 ## Command for remotely switching the car mode
@@ -124,7 +127,7 @@ Commands and responses are JSON.
 ## Ultrasonic module
 
 * **Function:** Check whether an obstacle is detected.
-  * **Command:** `{ "H": ID , "N": 21, "D1": parameter 1 }`
+  * **Command:** `{ "H": "ID" , "N": 21, "D1": parameter 1 }`
   * **Return:**
     * `{ID_false}` - No obstacles detected
     * `{ID_true}` - Obstacles detected
@@ -136,7 +139,7 @@ Commands and responses are JSON.
 ## Infrared module
 
 * **Function:** Check the value of the infrared sensor.
-  * **Command:** `{ "H": ID , "N": 22, "D1": SENSOR }`
+  * **Command:** `{ "H": "ID" , "N": 22, "D1": SENSOR }`
   * **Return:** `{ID_Infrared sensor value}`
   * **Parameters:**
     * **SENSOR** - The line following sensor to query.
@@ -146,7 +149,7 @@ Commands and responses are JSON.
 
 * **Function:** Check if the car has left the ground.
   * **Note:** This uses the line following sensors.
-  * **Command:** `{ "H": ID , "N": 23 }`
+  * **Command:** `{ "H": "ID" , "N": 23 }`
   * **Return:**
     * `{ID_false}` - The car has left the ground.
     * `{ID_true }` - The car is on the ground.
@@ -154,5 +157,5 @@ Commands and responses are JSON.
 ## Programming mode clears all states
 
 * **Function:** Clear all the functions being executed, and do not enter the standby mode.
-  * **Command:** `{ "H": ID , "N": 110 }`
+  * **Command:** `{ "H": "ID" , "N": 110 }`
   * **Return:** `{ID_ok}`
