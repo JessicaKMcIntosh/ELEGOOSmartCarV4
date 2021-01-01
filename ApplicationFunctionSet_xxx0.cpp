@@ -151,7 +151,7 @@ static bool ApplicationFunctionSet_SmartRobotCarLeaveTheGround(void)
 */
 static void ApplicationFunctionSet_SmartRobotCarLinearMotionControl(SmartRobotCarMotionControl direction, uint8_t directionRecord, uint8_t speed, uint8_t Kp, uint8_t UpperLimit)
 {
-  static float Yaw; //偏航
+  static float Yaw; //偏航 - Yaw
   static float yaw_So = 0;
   static uint8_t en = 110;
   static unsigned long is_time;
@@ -168,7 +168,7 @@ static void ApplicationFunctionSet_SmartRobotCarLinearMotionControl(SmartRobotCa
     en = directionRecord;
     yaw_So = Yaw;
   }
-  //加入比例常数Kp
+  //加入比例常数Kp - Add proportional constant Kp
   int R = (Yaw - yaw_So) * Kp + speed;
   if (R > UpperLimit)
   {
@@ -187,12 +187,12 @@ static void ApplicationFunctionSet_SmartRobotCarLinearMotionControl(SmartRobotCa
   {
     L = 10;
   }
-  if (direction == Forward) //前进
+  if (direction == Forward) //前进 - Go forward.
   {
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_just, /*speed_A*/ R,
                                            /*direction_B*/ direction_just, /*speed_B*/ L, /*controlED*/ control_enable);
   }
-  else if (direction == Backward) //后退
+  else if (direction == Backward) //后退 - Go Backward.
   {
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_back, /*speed_A*/ L,
                                            /*direction_B*/ direction_back, /*speed_B*/ R, /*controlED*/ control_enable);
@@ -216,7 +216,7 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
   uint8_t speed = is_speed;
   //需要进行直线运动调整的控制模式（在以下工作运动模式小车前后方向运动时容易产生位置偏移，运动达不到相对直线方向的效果，因此需要加入控制调节）
 /*
-    Google Translate
+    Google Translate:
     The control mode that needs linear motion adjustment
     (in the following work motion modes, the car is prone to position
     deviation when moving forward and backward, and the motion cannot
@@ -333,14 +333,11 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
 }
 /*
   传感器数据更新:局部更新(选择性更新)
-
-  Google Translate:
   Sensor data update: partial update (selective update)
 */
 void ApplicationFunctionSet::ApplicationFunctionSet_SensorDataUpdate(void)
 {
-  { /*电压状态更新*/
-    // Voltage status update
+  { // 电压状态更新 - Voltage status update
     static unsigned long VoltageData_time = 0;
     static int VoltageData_number = 1;
     //10ms 采集并更新一次 - 10ms acquisition and update once
@@ -379,8 +376,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SensorDataUpdate(void)
     TrackingDetectionStatus_M = function_xxx(TrackingData_M, TrackingDetection_S, TrackingDetection_E);
     TrackingData_L = AppITR20001.DeviceDriverSet_ITR20001_getAnaloguexxx_L();
     TrackingDetectionStatus_L = function_xxx(TrackingData_L, TrackingDetection_S, TrackingDetection_E);
-    //ITR20001 检测小车是否离开地面
-    // ITR20001 detects whether the car is off the ground
+    //ITR20001 检测小车是否离开地面 - Detects whether the car is off the ground
     ApplicationFunctionSet_SmartRobotCarLeaveTheGround();
   }
 
@@ -491,7 +487,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_RGB(void)
   }
   else if (((function_xxx((temp), 500, 3000)) && VoltageDetectionStatus == true) || VoltageDetectionStatus == false)
   {
-    switch (Application_SmartRobotCarxxx0.Functional_Mode) //Act on 模式控制序列
+    switch (Application_SmartRobotCarxxx0.Functional_Mode) //Act on 模式控制序列 - Mode control sequence
     {
     case /* constant-expression */ Standby_mode:
       /* code */
@@ -585,7 +581,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Tracking(void)
   static unsigned long MotorRL_time = 0;
   if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode)
   {
-    if (Car_LeaveTheGround == false) //车子离开地面了？
+    if (Car_LeaveTheGround == false) //车子离开地面了？ - The car left the ground?
     {
       ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
       return;
@@ -608,28 +604,32 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Tracking(void)
     // #endif
     if (function_xxx(TrackingData_M, TrackingDetection_S, TrackingDetection_E))
     {
-      /*控制左右电机转动：实现匀速直行*/
+      // 控制左右电机转动：实现匀速直行
+      // Control the rotation of the left and right motors
+      // to achieve a uniform speed straight
       ApplicationFunctionSet_SmartRobotCarMotionControl(Forward, 100);
       timestamp = true;
       BlindDetection = true;
     }
     else if (function_xxx(TrackingData_R, TrackingDetection_S, TrackingDetection_E))
     {
-      /*控制左右电机转动：前右*/
+      // 控制左右电机转动：前右
+      // Control left and right motor rotation: front right
       ApplicationFunctionSet_SmartRobotCarMotionControl(Right, 100);
       timestamp = true;
       BlindDetection = true;
     }
     else if (function_xxx(TrackingData_L, TrackingDetection_S, TrackingDetection_E))
     {
-      /*控制左右电机转动：前左*/
+      // 控制左右电机转动：前左
+      // Control left and right motor rotation: front left
       ApplicationFunctionSet_SmartRobotCarMotionControl(Left, 100);
       timestamp = true;
       BlindDetection = true;
     }
-    else //不在黑线上的时候。。。
+    else //不在黑线上的时候。。。 - When not on the black line. . .
     {
-      if (timestamp == true) //获取时间戳 timestamp
+      if (timestamp == true) //获取时间戳 - Get timestamp
       {
         timestamp = false;
         MotorRL_time = millis();
@@ -660,7 +660,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Tracking(void)
 }
 
 /*
-  避障功能
+  避障功能 - Obstacle avoidance function
 */
 void ApplicationFunctionSet::ApplicationFunctionSet_Obstacle(void)
 {
@@ -737,7 +737,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Obstacle(void)
 }
 
 /*
-  跟随模式：
+  跟随模式： - Follow mode:
 */
 void ApplicationFunctionSet::ApplicationFunctionSet_Follow(void)
 {
@@ -763,9 +763,11 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Follow(void)
 
       if (timestamp == 3)
       {
-        if (Position_Servo_xx != Position_Servo) //作用于舵机：避免循环执行 - Acting on the steering gear: avoid loop execution
+        // 作用于舵机：避免循环执行 - Acting on the steering gear: avoid loop execution
+        if (Position_Servo_xx != Position_Servo)
         {
-          Position_Servo_xx = Position_Servo; //作用于舵机：转向角记录 - Acting on the steering gear: steering angle record
+          // 作用于舵机：转向角记录 - Acting on the steering gear: steering angle record
+          Position_Servo_xx = Position_Servo;
 
           if (Position_Servo == 1)
           {
@@ -797,7 +799,8 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Follow(void)
           time_Servo = millis();
         }
       }
-      if (millis() - time_Servo > 1000) //作用于舵机停留位置时长_2s
+      // 作用于舵机停留位置时长_2s - Acting on the stay position of the steering gear_2s
+      if (millis() - time_Servo > 1000)
       {
         timestamp = 3;
         Position_Servo += 1;
@@ -814,20 +817,20 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Follow(void)
       OneCycle = 1;
       timestamp = 1;
       if ((Position_Servo == 1))
-      { /*控制左右电机转动：前进*/
+      { // 控制左右电机转动：前进 - Control the rotation of the left and right motors: forward
         ApplicationFunctionSet_SmartRobotCarMotionControl(Forward, 100);
       }
       else if ((Position_Servo == 2))
-      { /*控制左右电机转动：前右*/
+      { // 控制左右电机转动：前右 - Control left and right motor rotation: front right
         ApplicationFunctionSet_SmartRobotCarMotionControl(Right, 150);
       }
       else if ((Position_Servo == 3))
       {
-        /*控制左右电机转动：前进*/
+        // 控制左右电机转动：前进 - Control the rotation of the left and right motors: forward
         ApplicationFunctionSet_SmartRobotCarMotionControl(Forward, 100);
       }
       else if ((Position_Servo == 4))
-      { /*控制左右电机转动：前左*/
+      { // 控制左右电机转动：前左 - Control left and right motor rotation: front left
         ApplicationFunctionSet_SmartRobotCarMotionControl(Left, 150);
       }
     }
@@ -839,12 +842,12 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Follow(void)
   }
 }
 
-/*舵机控制*/
+// 舵机控制 - Steering gear control
 void ApplicationFunctionSet::ApplicationFunctionSet_Servo(uint8_t Set_Servo)
 {
   static int z_angle = 9;
   static int y_angle = 9;
-  uint8_t temp_Set_Servo = Set_Servo; //防止被优化
+  uint8_t temp_Set_Servo = Set_Servo; //防止被优化 - Prevent being optimized
 
   switch (temp_Set_Servo)
   {
@@ -858,11 +861,11 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Servo(uint8_t Set_Servo)
     {
       y_angle += 1;
     }
-    if (y_angle <= 3) //下限控制
+    if (y_angle <= 3) //下限控制 - Lower limit control
     {
       y_angle = 3;
     }
-    if (y_angle >= 11) //上下限控制
+    if (y_angle >= 11) //上下限控制 - Upper and lower limit control
     {
       y_angle = 11;
     }
@@ -881,11 +884,11 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Servo(uint8_t Set_Servo)
       z_angle -= 1;
     }
 
-    if (z_angle <= 1) //下限控制
+    if (z_angle <= 1) //下限控制 - Lower limit control
     {
       z_angle = 1;
     }
-    if (z_angle >= 17) //上下限控制
+    if (z_angle >= 17) //上下限控制 - Upper and lower limit control
     {
       z_angle = 17;
     }
@@ -908,9 +911,11 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Standby(void)
   if (Application_SmartRobotCarxxx0.Functional_Mode == Standby_mode)
   {
     ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
-    if (true == is_ED) //作用于偏航原始数据调零(确认小车放置在静止平面！)
+    // 作用于偏航原始数据调零(确认小车放置在静止平面！)
+    // Act on the yaw raw data to zero (make sure the car is placed on a stationary plane!)
+    if (true == is_ED)
     {
-      static unsigned long timestamp; //获取时间戳 timestamp
+      static unsigned long timestamp; // 获取时间戳 Get timestamp.
       if (millis() - timestamp > 20)
       {
         timestamp = millis();
@@ -954,6 +959,14 @@ void ApplicationFunctionSet::CMD_inspect_xxx0(void)
         uint8_t is_MotorDirection, 电机转向  1正  2反  0停止
         uint8_t is_MotorSpeed,     电机速度   0-250
         无时间限定
+
+  Google Translate:
+  N1: instruction
+  CMD mode: motion mode <motor control> receives and executes unidirectional drive of the motor according to the APP control command
+  Input: uint8_t is_MotorSelection, motor selection 1 left 2 right 0 all
+    uint8_t is_MotorDirection, motor direction 1 forward 2 reverse 0 stop
+    uint8_t is_MotorSpeed, motor speed 0-250
+    No time limit
 */
 // void ApplicationFunctionSet::CMD_MotorControl_xxx0(uint8_t is_MotorSelection, uint8_t is_MotorDirection, uint8_t is_MotorSpeed)
 // {
@@ -1150,16 +1163,16 @@ static void CMD_CarControl(uint8_t is_CarDirection, uint8_t is_CarSpeed)
 {
   switch (is_CarDirection)
   {
-  case 1: /*运动模式 左前*/
+  case 1: // 运动模式 左前 - Sports mode front left
     ApplicationFunctionSet_SmartRobotCarMotionControl(Left, is_CarSpeed);
     break;
-  case 2: /*运动模式 右前*/
+  case 2: // 运动模式 右前 - Sports mode front right
     ApplicationFunctionSet_SmartRobotCarMotionControl(Right, is_CarSpeed);
     break;
-  case 3: /*运动模式 前进*/
+  case 3: // 运动模式 前进 - Sport mode forward
     ApplicationFunctionSet_SmartRobotCarMotionControl(Forward, is_CarSpeed);
     break;
-  case 4: /*运动模式 后退*/
+  case 4: // 运动模式 后退 - Sport mode back
     ApplicationFunctionSet_SmartRobotCarMotionControl(Backward, is_CarSpeed);
     break;
   default:
@@ -1221,7 +1234,7 @@ static void CMD_CarControl(uint8_t is_CarDirection, uint8_t is_CarSpeed)
 void ApplicationFunctionSet::CMD_CarControlTimeLimit_xxx0(void)
 {
   static boolean CarControl = false;
-  static boolean CarControl_TE = false; //还有时间标志
+  static boolean CarControl_TE = false; // 还有时间标志 - There is a time stamp
   static boolean CarControl_return = false;
   if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_CarControl_TimeLimit) //进入车子有时间限定控制模式
   {
@@ -1306,6 +1319,11 @@ void ApplicationFunctionSet::CMD_CarControlNoTimeLimit_xxx0(void)
   N4 : 指令
   CMD模式：运动模式<电机控制>
   接收并根据 APP端控制命令 执行对左右电机转速的控制
+
+  Google Translate:
+  N4: Command
+  CMD mode: motion mode <motor control>
+  Receive and execute the control of the left and right motor speed according to the APP control command
 */
 void ApplicationFunctionSet::CMD_MotorControlSpeed_xxx0(uint8_t is_Speed_L, uint8_t is_Speed_R)
 {
@@ -1361,6 +1379,10 @@ void ApplicationFunctionSet::CMD_MotorControlSpeed_xxx0(void)
 /*
   N5:指令
   CMD模式：<舵机控制>
+
+  Google Translate:
+  N5: instruction
+  CMD mode: <Servo control>
 */
 void ApplicationFunctionSet::CMD_ServoControl_xxx0(void)
 {
@@ -1372,8 +1394,13 @@ void ApplicationFunctionSet::CMD_ServoControl_xxx0(void)
 }
 /*
   N7:指令
-   CMD模式：<灯光控制>
-   有时间限定：时间结束后进入编程模式
+  CMD模式：<灯光控制>
+  有时间限定：时间结束后进入编程模式
+
+  Google Translate:
+  N7: Command
+  CMD mode: <light control>
+  Time limit: enter programming mode after time is over
 */
 void ApplicationFunctionSet::CMD_LightingControlTimeLimit_xxx0(uint8_t is_LightingSequence, uint8_t is_LightingColorValue_R, uint8_t is_LightingColorValue_G, uint8_t is_LightingColorValue_B,
                                                                uint32_t is_LightingTimer)
@@ -1913,7 +1940,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 #endif
         break;
 
-      case 23: /*<命令：N 23>：是否离开地面 */
+      case 23: // <命令：N 23>：是否离开地面 - <Command: N 23>: Whether to leave the ground
         if (true == Car_LeaveTheGround)
         {
 #if _is_print
