@@ -128,6 +128,18 @@ For example `"H": "123"`.
   * **Parameters:**
     * **SENSITIVITY** - 50-1000
 
+## FastLED - Brightness adjustment
+
+* **Function:** Adjust the brightness of the FasLED.
+  * **Note:** This is not documented in the communications protocol PDF file.
+              From testing this command does not work.
+  * **Command:** `{ "N": 105, "D1": ADJUSTMENT }`
+  * **Return:** No return.
+  * **Parameters:**
+    * **ADJUSTMENT** - The direction to adjust the brightness.
+      * **1** - Adjust the brightness up by 5, to a maximum of 250.
+      * **2** - Adjust the brightness down by 5, to a minimum of 0.
+
 ## Camera rotation
 
 * **Function:** Set the rotation direction of the camera.
