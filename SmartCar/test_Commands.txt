@@ -1,0 +1,289 @@
+The ``Commands`` module
+
+This module returns JSON for controlling the Smart Car.
+
+Import the Commands module.
+    >>> import Commands
+
+================================================================================
+CameraRotation - Returns the JSON to set the rotation direction of the camera.
+
+    >>> Commands.CameraRotation(1)
+    '{"N": 106, "D1": 1}'
+
+    >>> Commands.CameraRotation(4)
+    '{"N": 106, "D1": 4}'
+
+    >>> Commands.CameraRotation(0) # Direction below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction must be between 1 and 4, 0 is out of range.
+
+    >>> Commands.CameraRotation(5) # Direction above maximum of 4.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction must be between 1 and 4, 5 is out of range.
+
+================================================================================
+CarControl - Returns the JSON to set the direction and speed of the car.
+
+    >>> Commands.SequenceNumber = 0 # Reset the sequence number to 0.
+
+    >>> Commands.CarControl(1, 0)
+    '{"H": "1", "N": 3, "D1": 1, "D2": 0}'
+
+    >>> Commands.CarControl(4, 255)
+    '{"H": "2", "N": 3, "D1": 4, "D2": 255}'
+
+    >>> Commands.CarControl(0, 0) # Direction below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction can only be between 1 and 4, 0 is out of range.
+
+    >>> Commands.CarControl(1, -1) # Speed below minimum of 0.
+    Traceback (most recent call last):
+        ...
+    ValueError: The speed must be between 0 and 255, -1 is out of range.
+
+    >>> Commands.CarControl(5, 0) # Direction above the maximum of 4.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction can only be between 1 and 4, 5 is out of range.
+
+    >>> Commands.CarControl(1, 256) # Speed above the maximum of 255.
+    Traceback (most recent call last):
+        ...
+    ValueError: The speed must be between 0 and 255, 256 is out of range.
+
+================================================================================
+CarControlTime - Returns the JSON to set the direction and speed of the car
+                 for a specified amount of time.
+
+    >>> Commands.SequenceNumber = 0 # Reset the sequence number to 0.
+
+    >>> Commands.CarControlTime(1, 0, 10)
+    '{"H": "1", "N": 2, "D1": 1, "D2": 0, "D3": 10}'
+
+    >>> Commands.CarControlTime(4, 255, 100)
+    '{"H": "2", "N": 2, "D1": 4, "D2": 255, "D3": 100}'
+
+    >>> Commands.CarControlTime(0, 0, 100) # Direction below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction can only be between 1 and 4, 0 is out of range.
+
+    >>> Commands.CarControlTime(1, -1, 100) # Speed below minimum of 0.
+    Traceback (most recent call last):
+        ...
+    ValueError: The speed must be between 0 and 255, -1 is out of range.
+
+    >>> Commands.CarControlTime(5, 0, 100) # Direction above the maximum of 4.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction can only be between 1 and 4, 5 is out of range.
+
+    >>> Commands.CarControlTime(1, 256, 100) # Speed above the maximum of 255.
+    Traceback (most recent call last):
+        ...
+    ValueError: The speed must be between 0 and 255, 256 is out of range.
+
+================================================================================
+InfraredStatus - Returns the JSON to check  the value of the infrared sensor.
+
+    >>> Commands.InfraredStatus(0)
+    '{"N": 22, "D1": 0}'
+
+    >>> Commands.InfraredStatus(2)
+    '{"N": 22, "D1": 2}'
+
+    >>> Commands.InfraredStatus(-1) # Sensor below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The sensor must be between 0 and 2, -1 is out of range.
+
+    >>> Commands.InfraredStatus(3) # Sensor above the maximum of 2.
+    Traceback (most recent call last):
+        ...
+    ValueError: The sensor must be between 0 and 2, 3 is out of range.
+
+================================================================================
+JoystickClear - Return the JSON to clear the joystick mode.
+
+    >>> Commands.JoystickClear()
+    '{"N": 100}'
+
+================================================================================
+JoystickMovement - Returns the JSON to command the Smart car to move in a direction.
+
+    >>> Commands.JoystickMovement(0)
+    '{"N": 102, "D1": 0}'
+
+    >>> Commands.JoystickMovement(9)
+    '{"N": 102, "D1": 9}'
+
+    >>> Commands.JoystickMovement(-1) # Direction below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction must be between 0 and 9, -1 is out of range.
+
+    >>> Commands.JoystickMovement(10) # Direction above the maximum of 9.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction must be between 0 and 9, 10 is out of range.
+
+================================================================================
+LeftGroud - Returns the JSON to check if the car has left the ground.
+
+    >>> Commands.LeftGroud()
+    '{"N": 23}'
+
+================================================================================
+MotorControl - Returns the JSON to set the speed and direction of a motor.
+
+    >>> Commands.SequenceNumber = 0 # Reset the sequence number to 0.
+
+    >>> Commands.MotorControl(0, 0, 1)
+    '{"H": "1", "N": 1, "D1": 0, "D2": 0, "D3": 1}'
+
+    >>> Commands.MotorControl(2, 255, 2)
+    '{"H": "2", "N": 1, "D1": 2, "D2": 255, "D3": 2}'
+
+    >>> Commands.MotorControl(-1, 0, 1) # Motor below minimum of 0.
+    Traceback (most recent call last):
+        ...
+    ValueError: The motor must be between 0 and 2, -1 is out of range.
+
+    >>> Commands.MotorControl(0, -1, 1) # Speed below minimum of 0.
+    Traceback (most recent call last):
+        ...
+    ValueError: The speed must be between 0 and 255, -1 is out of range.
+
+    >>> Commands.MotorControl(0, 0, 0) # Direction below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction can only be 1 or 2, 0 is out of range.
+
+    >>> Commands.MotorControl(3, 0, 1) # Motor above the maximum of 2.
+    Traceback (most recent call last):
+        ...
+    ValueError: The motor must be between 0 and 2, 3 is out of range.
+
+    >>> Commands.MotorControl(1, 256, 1) # Speed above the maximum of 255.
+    Traceback (most recent call last):
+        ...
+    ValueError: The speed must be between 0 and 255, 256 is out of range.
+
+    >>> Commands.MotorControl(0, 0, 3) # Direction above the maximum of 2.
+    Traceback (most recent call last):
+        ...
+    ValueError: The direction can only be 1 or 2, 3 is out of range.
+
+================================================================================
+MotorControlSpeed - Returns the JSON to set the speed of the left and right motors separately.
+
+    >>> Commands.SequenceNumber = 0 # Reset the sequence number to 0.
+
+    >>> Commands.MotorControlSpeed(0, 0)
+    '{"H": "1", "N": 4, "D1": 0, "D2": 0}'
+
+    >>> Commands.MotorControlSpeed(255, 255)
+    '{"H": "2", "N": 4, "D1": 255, "D2": 255}'
+
+    >>> Commands.MotorControlSpeed(-1, 0) # Left speed below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The leftsped must be between 0 and 255, -1 is out of range.
+
+    >>> Commands.MotorControlSpeed(0, -1) # Right speed below minimum of 0.
+    Traceback (most recent call last):
+        ...
+    ValueError: The rightsped must be between 0 and 255, -1 is out of range.
+
+    >>> Commands.MotorControlSpeed(256, 0) # Left speed above the maximum of 255.
+    Traceback (most recent call last):
+        ...
+    ValueError: The leftsped must be between 0 and 255, 256 is out of range.
+
+    >>> Commands.MotorControlSpeed(0, 256) # Right speed above the maximum of 255.
+    Traceback (most recent call last):
+        ...
+    ValueError: The rightsped must be between 0 and 255, 256 is out of range.
+
+================================================================================
+ProgramingClear - Returns the JSON to clear programming mode states.
+
+    >>> Commands.SequenceNumber = 0 # Reset the sequence number to 0.
+
+    >>> Commands.ProgramingClear()
+    '{"H": "1", "N": 110}'
+
+================================================================================
+ServoControl - Returns the JSON to command the Smart car to move one of the servos.
+
+    >>> Commands.SequenceNumber = 0 # Reset the sequence number to 0.
+
+    >>> Commands.ServoControl(1, 0)
+    '{"H": "1", "N": 5, "D1": 1, "D2": 0}'
+
+    >>> Commands.ServoControl(2, 180)
+    '{"H": "2", "N": 5, "D1": 2, "D2": 180}'
+
+    >>> Commands.ServoControl(-1, 0) # Servo below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The servo can only be 1 or 2, -1 is out of range.
+
+    >>> Commands.ServoControl(1, -1) # Angle below minimum of 0.
+    Traceback (most recent call last):
+        ...
+    ValueError: The angle must be between 0 and 180, -1 is out of range.
+
+    >>> Commands.ServoControl(3, 0) # Servo above the maximum of 2.
+    Traceback (most recent call last):
+        ...
+    ValueError: The servo can only be 1 or 2, 3 is out of range.
+
+    >>> Commands.ServoControl(1, 181) # Angle above the maximum of 180.
+    Traceback (most recent call last):
+        ...
+    ValueError: The angle must be between 0 and 180, 181 is out of range.
+
+================================================================================
+SwitchMode - Returns the JSON to switch the car mode.
+
+    >>> Commands.SwitchMode(1)
+    '{"N": 101, "D1": 1}'
+
+    >>> Commands.SwitchMode(3)
+    '{"N": 101, "D1": 3}'
+
+    >>> Commands.SwitchMode(-1) # Mode below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The mode must be between 1 and 3, -1 is out of range.
+
+    >>> Commands.SwitchMode(4) # Mode above the maximum of 3.
+    Traceback (most recent call last):
+        ...
+    ValueError: The mode must be between 1 and 3, 4 is out of range.
+
+================================================================================
+UltrasonicStatus - Returns the JSON to check whether an obstacle is detected.
+
+    >>> Commands.UltrasonicStatus(1)
+    '{"N": 21, "D1": 1}'
+
+    >>> Commands.UltrasonicStatus(2)
+    '{"N": 21, "D1": 2}'
+
+    >>> Commands.UltrasonicStatus(-1) # Mode below minimum of 1.
+    Traceback (most recent call last):
+        ...
+    ValueError: The mode can only be 1 or 2, -1 is out of range.
+
+    >>> Commands.UltrasonicStatus(3) # Mode above the maximum of 3.
+    Traceback (most recent call last):
+        ...
+    ValueError: The mode can only be 1 or 2, 3 is out of range.
+
+
