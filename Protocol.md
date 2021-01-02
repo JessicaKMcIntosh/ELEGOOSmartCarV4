@@ -1,4 +1,4 @@
-# Smart Car Serial Commucations Protocol
+# Smart Car Serial Communications Protocol
 
 The serial communications protocol for the [Elegoo](http://www.elegoo.com)
 Smart Robot CAR 4.0. See their
@@ -15,7 +15,7 @@ For example `"H": "123"`.
 ## Motor
 
 * **Function:** Select the motor to set the rotation direction and speed.
-  * **Command:** `{ "H": "ID" , "N": 1 , "D1": MOTOR , "D2": SPEED , "D3": DIRECTION }`
+  * **Command:** `{ "H": "ID", "N": 1, "D1": MOTOR, "D2": SPEED, "D3": DIRECTION }`
   * **Return:** `{ID_ok}`
   * **Parameters:**
     * **MOTOR:** Select the corresponding motor.
@@ -28,8 +28,22 @@ For example `"H": "123"`.
       * **1** - Clockwise
       * **2** - Counterclockwise
 
+* **Function:** Set the direction and speed of the car for a specified amount of time.
+  * **Note:** This is not documented in the communications protocol PDF file.
+  * **Command:** `{ "H": "ID", "N": 2, "D1": DIRECTION, "D2": SPEED, "T": TIME }`
+  * **Return:** No return.
+  * **Parameters:**
+    * **DIRECTION:** The rotation direction of the selected motor.
+      * **1** - Turn left
+      * **2** - Turn right
+      * **3** - Go forward
+      * **4** - Back
+    * **SPEED:** The rotation speed value of the selected motor.
+      * The range of speed value: 0 ~ 255
+    * **TIME:** The amount of time to move the car in milliseconds.
+
 * **Function:** Set the direction and speed of the car.
-  * **Command:** `{ "H": "ID" , "N": 3 , "D1": DIRECTION , "D2" : SPEED }`
+  * **Command:** `{ "H": "ID", "N": 3, "D1": DIRECTION, "D2": SPEED }`
   * **Return:** `{ID_ok}`
   * **Parameters:**
     * **DIRECTION:** The rotation direction of the selected motor.
@@ -41,7 +55,7 @@ For example `"H": "123"`.
       * The range of speed value: 0 ~ 255
 
 * **Function:** Set the speed of the left and right motors separately.
-  * **Command:** `{ "H": "ID" , "N": 4 , "D1": LEFT_SPEED , "D2" : RIGHT_SPEED }`
+  * **Command:** `{ "H": "ID", "N": 4, "D1": LEFT_SPEED, "D2": RIGHT_SPEED }`
   * **Return:** `{ID_ok}`
   * **Parameters:**
     * **LEFT_SPEED** - The speed of left wheel.
@@ -52,7 +66,7 @@ For example `"H": "123"`.
 ## Servo motor
 
 * **Function:** Select the rotation angle of the servo motor.
-  * **Command:** `{ "H": "ID" , "N": 5 , "D1": SERVO , "D2" : ANGLE }`
+  * **Command:** `{ "H": "ID", "N": 5, "D1": SERVO, "D2": ANGLE }`
   * **Return:** `{ID_ok}`
   * **Parameters:**
     * **SERVO** - Select the servo motor.
@@ -60,20 +74,20 @@ For example `"H": "123"`.
       * **2** - Servo motor that can turn up and down.
     * **ANGLE** - The rotation angle of the servo motor: 0-180.
   * **Examples:**
-    * **Send:** `{ "H": "1", "N": 5 , "D1": 1 , "D2" : 0 }`
+    * **Send:** `{ "H": "1", "N": 5, "D1": 1, "D2" : 0 }`
       * **Receive:** `{1_ok}`
       * **Action:** Head rotates all the way to the right.
-    * **Send:** `{ "H": "1", "N": 5 , "D1": 1 , "D2" :  180}`
+    * **Send:** `{ "H": "1", "N": 5, "D1": 1, "D2" :  180}`
       * **Receive:** `{1_ok}`
       * **Action:** Head rotates all the way to the Left.
-    * **Send:** `{ "H": "1", "N": 5 , "D1": 1 , "D2" : 90 }`
+    * **Send:** `{ "H": "1", "N": 5, "D1": 1, "D2" : 90 }`
       * **Receive:** `{1_ok}`
       * **Action:** Head rotates to the center.
 
 ## Command for remotely switching the car mode
 
 * **Function:** Switch the car mode.
-  * **Command:** `{ "N": 101 , "D1": MODE }`
+  * **Command:** `{ "N": 101, "D1": MODE }`
   * **Return:** No return.
   * **Parameters:**
     * **MODE:** - The mode to switch the car to.
@@ -90,7 +104,7 @@ For example `"H": "123"`.
 ## Joystick movement command
 
 * **Function:** Make the car move in a certain direction at the default maximum speed.
-  * **Command:** `{ "N": 102 , "D1": DIRECTION , "D2": SPEED }`
+  * **Command:** `{ "N": 102, "D1": DIRECTION, "D2": SPEED }`
   * **Return:** No return.
   * **Parameters:**
     * **DIRECTION** - Direction of the car.
@@ -102,12 +116,14 @@ For example `"H": "123"`.
       * **6** - Rear left
       * **7** - Right front
       * **8** - Rear Right
+      * **9** - Stop / Standby
+      * Any other value is interpreted as stop.
     * **SPEED** - Speed value. (**NOTE:** The code ignores ths parameter.)
 
 ## Remote control - Threshold adjustment
 
 * **Function:** Adjust the tracking sensitivity of the car.
-  * **Command:** `{ "N": 104 , "D1": SENSITIVITY }`
+  * **Command:** `{ "N": 104, "D1": SENSITIVITY }`
   * **Return:** No return.
   * **Parameters:**
     * **SENSITIVITY** - 50-1000
@@ -115,7 +131,7 @@ For example `"H": "123"`.
 ## Camera rotation
 
 * **Function:** Set the rotation direction of the camera.
-  * **Command:** `{ "N": 106 , "D1": DIRECTION }`
+  * **Command:** `{ "N": 106, "D1": DIRECTION }`
   * **Return:** No return.
   * **Parameters:**
     * **DIRECTION** - The rotation direction of the camera.
@@ -127,7 +143,7 @@ For example `"H": "123"`.
 ## Ultrasonic module
 
 * **Function:** Check whether an obstacle is detected.
-  * **Command:** `{ "H": "ID" , "N": 21, "D1": parameter 1 }`
+  * **Command:** `{ "H": "ID", "N": 21, "D1": parameter 1 }`
   * **Return:**
     * `{ID_false}` - No obstacles detected
     * `{ID_true}` - Obstacles detected
@@ -139,7 +155,7 @@ For example `"H": "123"`.
 ## Infrared module
 
 * **Function:** Check the value of the infrared sensor.
-  * **Command:** `{ "H": "ID" , "N": 22, "D1": SENSOR }`
+  * **Command:** `{ "H": "ID", "N": 22, "D1": SENSOR }`
   * **Return:** `{ID_Infrared sensor value}`
   * **Parameters:**
     * **SENSOR** - The line following sensor to query.
@@ -149,7 +165,7 @@ For example `"H": "123"`.
 
 * **Function:** Check if the car has left the ground.
   * **Note:** This uses the line following sensors.
-  * **Command:** `{ "H": "ID" , "N": 23 }`
+  * **Command:** `{ "H": "ID", "N": 23 }`
   * **Return:**
     * `{ID_false}` - The car has left the ground.
     * `{ID_true }` - The car is on the ground.
@@ -157,5 +173,5 @@ For example `"H": "123"`.
 ## Programming mode clears all states
 
 * **Function:** Clear all the functions being executed, and do not enter the standby mode.
-  * **Command:** `{ "H": "ID" , "N": 110 }`
+  * **Command:** `{ "H": "ID", "N": 110 }`
   * **Return:** `{ID_ok}`
