@@ -1,5 +1,22 @@
 """Commands for the Smart Car. JSON is returned ready to be sent to the robot."""
 
+# In case someone wants to import *.
+__all__ = [
+    'CameraRotation',
+    'CarControl',
+    'CarControlTime',
+    'InfraredStatus',
+    'JoystickClear',
+    'JoystickMovement',
+    'LeftGround',
+    'MotorControl',
+    'MotorControlSpeed',
+    'ProgramingClear',
+    'ServoControl',
+    'SwitchMode',
+    'UltrasonicStatus'
+]
+
 import json
 
 # This is the sequence number for commands that take an ID.
