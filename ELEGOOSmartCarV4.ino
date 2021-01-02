@@ -14,7 +14,7 @@ void setup()
   // put your setup code here, to run once:
   Application_FunctionSet.ApplicationFunctionSet_Init();
   wdt_enable(WDTO_2S);
-  // Serial.println("SmartRobotCarV4.0_20200825");
+  Serial.println("SmartRobotCarV4.0_20201230");
 }
 
 void loop()
