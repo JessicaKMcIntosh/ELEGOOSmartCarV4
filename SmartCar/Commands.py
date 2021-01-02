@@ -154,7 +154,7 @@ def JoystickMovement(direction, speed=None):
     }
     return json.dumps(command)
 
-def LeftGroud():
+def LeftGround():
     """Returns the JSON to check if the car has left the ground."""
     # Create and return the command.
     command = {

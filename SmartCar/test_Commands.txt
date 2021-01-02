@@ -132,9 +132,9 @@ JoystickMovement - Returns the JSON to command the Smart car to move in a direct
     ValueError: The direction must be between 0 and 9, 10 is out of range.
 
 ================================================================================
-LeftGroud - Returns the JSON to check if the car has left the ground.
+LeftGround - Returns the JSON to check if the car has left the ground.
 
-    >>> Commands.LeftGroud()
+    >>> Commands.LeftGround()
     '{"N": 23}'
 
 ================================================================================
