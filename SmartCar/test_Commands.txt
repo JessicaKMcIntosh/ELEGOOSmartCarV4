@@ -62,10 +62,10 @@ CarControlTime - Returns the JSON to set the direction and speed of the car
     >>> Commands.SequenceNumber = 0 # Reset the sequence number to 0.
 
     >>> Commands.CarControlTime(1, 0, 10)
-    '{"H": "1", "N": 2, "D1": 1, "D2": 0, "D3": 10}'
+    '{"H": "1", "N": 2, "D1": 1, "D2": 0, "T": 10}'
 
     >>> Commands.CarControlTime(4, 255, 100)
-    '{"H": "2", "N": 2, "D1": 4, "D2": 255, "D3": 100}'
+    '{"H": "2", "N": 2, "D1": 4, "D2": 255, "T": 100}'
 
     >>> Commands.CarControlTime(0, 0, 100) # Direction below minimum of 1.
     Traceback (most recent call last):

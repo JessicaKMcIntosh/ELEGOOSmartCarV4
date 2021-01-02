@@ -89,7 +89,7 @@ def CarControlTime(direction, speed, time):
         "N": 2,
         "D1": direction,
         "D2": speed,
-        "D3": time
+        "T": time
     }
     return json.dumps(command)
 
