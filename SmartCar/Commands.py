@@ -44,7 +44,7 @@ def CarControl(direction, speed):
     """
 
     # Verify the parameters
-    if direction < 0 or direction > 4:
+    if direction < 1 or direction > 4:
         raise ValueError("The direction can only be between 1 and 4, %d is out of range." % direction)
     if speed < 0 or speed > 255:
         raise ValueError("The speed must be between 0 and 255, %d is out of range." % speed)
@@ -76,7 +76,7 @@ def CarControlTime(direction, speed, time):
     """
 
     # Verify the parameters
-    if direction < 0 or direction > 4:
+    if direction < 1 or direction > 4:
         raise ValueError("The direction can only be between 1 and 4, %d is out of range." % direction)
     if speed < 0 or speed > 255:
         raise ValueError("The speed must be between 0 and 255, %d is out of range." % speed)
@@ -145,7 +145,7 @@ def JoystickMovement(direction, speed=None):
 
     # Verify the parameters
     if direction < 0 or direction > 9:
-        raise ValueError("The direction must be between 0 and 9, %d is out of range." % angle)
+        raise ValueError("The direction must be between 0 and 9, %d is out of range." % direction)
 
     # Create and return the command.
     command = {
@@ -295,8 +295,8 @@ def UltrasonicStatus(mode):
 
     # Verify the parameters
 
-    if mode < 1 or mode > 2:
-        raise ValueError("The mode must be between 1 and 2, %d is out of range." % mode)
+    if mode != 1 and mode != 2:
+        raise ValueError("The mode can only be 1 or 2, %d is out of range." % mode)
 
     # Create and return the command.
     command = {
