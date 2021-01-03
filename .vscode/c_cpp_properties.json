@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}",
-                "${env:HOMEPATH}\\Documents\\Arduino\\libraries",
+                "${env:HOMEPATH}\\Documents\\Arduino\\libraries\\**",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\include",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\standard",
@@ -17,7 +17,7 @@
             "browse": {
                 "path": [
                     "${workspaceFolder}",
-                    "${env:HOMEPATH}\\Documents\\Arduino\\libraries",
+                    "${env:HOMEPATH}\\Documents\\Arduino\\libraries\\**",
                     "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
                     "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\include",
                     "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\standard",
