@@ -10,6 +10,12 @@ This is based on the source version SmartRobotCarV4.0_20201218.
 From the file `ELEGOO Smart Robot Car Kit V4.0 2020.12.18.zip` downloaded from the
 [ELEGOO website](https://www.elegoo.com/pages/arduino-kits-support-files).
 
+The Python library `SmartCar` is my own creation for controlling the robot.
+Currently it only supports TCP/IP commucations with the Smart Car.
+There is an example program `SmartCar/example.py` for using the library.
+Right now the example program only supports Windows.
+See the file `SmartCar/README.md` for more details.
+
 **UPDATE 2020-12-30:**
 I had emailed support about the downloaded source not building. They sent me a
 new file that has custom IR Remote files. With these new files the code builds
