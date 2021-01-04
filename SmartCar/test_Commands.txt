@@ -11,18 +11,18 @@ CameraRotation - Returns the JSON to set the rotation direction of the camera.
     >>> Commands.CameraRotation(1)
     '{"N": 106, "D1": 1}'
 
-    >>> Commands.CameraRotation(4)
-    '{"N": 106, "D1": 4}'
+    >>> Commands.CameraRotation(5)
+    '{"N": 106, "D1": 5}'
 
     >>> Commands.CameraRotation(0) # Direction below minimum of 1.
     Traceback (most recent call last):
         ...
-    ValueError: The direction must be between 1 and 4, 0 is out of range.
+    ValueError: The direction must be between 1 and 5, 0 is out of range.
 
-    >>> Commands.CameraRotation(5) # Direction above maximum of 4.
+    >>> Commands.CameraRotation(6) # Direction above maximum of 4.
     Traceback (most recent call last):
         ...
-    ValueError: The direction must be between 1 and 4, 5 is out of range.
+    ValueError: The direction must be between 1 and 5, 6 is out of range.
 
 ================================================================================
 CarControl - Returns the JSON to set the direction and speed of the car.

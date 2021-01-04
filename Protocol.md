@@ -161,6 +161,7 @@ For example `"H": "123"`.
       * **2** - Turn down
       * **3** - Turn left
       * **4** - Turn right
+      * **5** - Turn to the center
 
 ## Ultrasonic module
 

@@ -32,12 +32,13 @@ def CameraRotation(direction):
             2 - Turn down
             3 - Turn left
             4 - Turn right
+            5 - Turn to the center
     """
 
     # Verify the parameters
 
-    if direction < 1 or direction > 4:
-        raise ValueError("The direction must be between 1 and 4, %d is out of range." % direction)
+    if direction < 1 or direction > 5:
+        raise ValueError("The direction must be between 1 and 5, %d is out of range." % direction)
 
     # Create and return the command.
     command = {
