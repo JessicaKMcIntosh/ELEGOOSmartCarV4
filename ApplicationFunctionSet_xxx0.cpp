@@ -404,19 +404,19 @@ static void CMD_Lighting(uint8_t is_LightingSequence, int8_t is_LightingColorVal
   case 0:
     AppRBG_LED.DeviceDriverSet_RBGLED_Color(NUM_LEDS, is_LightingColorValue_R, is_LightingColorValue_G, is_LightingColorValue_B);
     break;
-  case 1: /*左*/
+  case 1: /* 左 - Left */
     AppRBG_LED.DeviceDriverSet_RBGLED_Color(3, is_LightingColorValue_R, is_LightingColorValue_G, is_LightingColorValue_B);
     break;
-  case 2: /*前*/
+  case 2: /* 前 - Front */
     AppRBG_LED.DeviceDriverSet_RBGLED_Color(2, is_LightingColorValue_R, is_LightingColorValue_G, is_LightingColorValue_B);
     break;
-  case 3: /*右*/
+  case 3: /* 右 - Right */
     AppRBG_LED.DeviceDriverSet_RBGLED_Color(1, is_LightingColorValue_R, is_LightingColorValue_G, is_LightingColorValue_B);
     break;
-  case 4: /*后*/
+  case 4: /* 后 - Rear */
     AppRBG_LED.DeviceDriverSet_RBGLED_Color(0, is_LightingColorValue_R, is_LightingColorValue_G, is_LightingColorValue_B);
     break;
-  case 5: /*中*/
+  case 5: /* 中 - Center?? */
     AppRBG_LED.DeviceDriverSet_RBGLED_Color(4, is_LightingColorValue_R, is_LightingColorValue_G, is_LightingColorValue_B);
     break;
   default:
@@ -1595,11 +1595,16 @@ void ApplicationFunctionSet::CMD_UltrasoundModuleStatus_xxx0(uint8_t is_get)
   N22:指令
   CMD模式：循迹模块 接收并根据 APP端控制命令   反馈循迹状态及数据
   输入：
+
+  Google Translate:
+  N22: Command
+    CMD mode: The tracking module receives and feeds back tracking status and data according to APP control commands
+    enter:
 */
 void ApplicationFunctionSet::CMD_TraceModuleStatus_xxx0(uint8_t is_get)
 {
   char toString[10];
-  if (0 == is_get) /*循迹状态获取左边*/
+  if (0 == is_get) // 循迹状态获取左边 - Tracking state gets left
   {
     sprintf(toString, "%d", TrackingData_L);
 #if _is_print
@@ -1619,7 +1624,7 @@ void ApplicationFunctionSet::CMD_TraceModuleStatus_xxx0(uint8_t is_get)
 #endif
     }*/
   }
-  else if (1 == is_get) /*循迹状态获取中间*/
+  else if (1 == is_get) // 循迹状态获取中间 - Tracking state acquisition intermediate
   {
     sprintf(toString, "%d", TrackingData_M);
 #if _is_print
@@ -1639,7 +1644,7 @@ void ApplicationFunctionSet::CMD_TraceModuleStatus_xxx0(uint8_t is_get)
 #endif
     }*/
   }
-  else if (2 == is_get) /*循迹状态获取右边*/
+  else if (2 == is_get) // 循迹状态获取右边 - Tracking state gets right
   {
     sprintf(toString, "%d", TrackingData_R);
 #if _is_print
@@ -1659,7 +1664,9 @@ void ApplicationFunctionSet::CMD_TraceModuleStatus_xxx0(uint8_t is_get)
 #endif
     }*/
   }
-  Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode; /*进入编程模式提示符<等待下一组控制命令的到来>*/
+  // 进入编程模式提示符<等待下一组控制命令的到来>
+  // Enter the programming mode prompt <waiting for the arrival of the next set of control commands>
+  Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode;
 }
 
 /* 
@@ -1703,7 +1710,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_KeyCommand(void)
     }
   }
 }
-/*红外遥控*/
+// 红外遥控 - Infrared remote control
 void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
 {
   uint8_t IRrecv_button;
@@ -1717,37 +1724,33 @@ void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
   {
     switch (IRrecv_button)
     {
-    case /* constant-expression */ 1:
-      /* code */
+    case 1:
       Application_SmartRobotCarxxx0.Motion_Control = Forward;
       break;
-    case /* constant-expression */ 2:
-      /* code */
+    case 2:
       Application_SmartRobotCarxxx0.Motion_Control = Backward;
       break;
-    case /* constant-expression */ 3:
-      /* code */
+    case 3:
       Application_SmartRobotCarxxx0.Motion_Control = Left;
       break;
-    case /* constant-expression */ 4:
-      /* code */
+    case 4:
       Application_SmartRobotCarxxx0.Motion_Control = Right;
       break;
-    case /* constant-expression */ 5:
-      /* code */
+    case 5:
       Application_SmartRobotCarxxx0.Functional_Mode = Standby_mode;
       break;
-    case /* constant-expression */ 6:
-      /* code */ Application_SmartRobotCarxxx0.Functional_Mode = TraceBased_mode;
+    case  6:
+      Application_SmartRobotCarxxx0.Functional_Mode = TraceBased_mode;
       break;
-    case /* constant-expression */ 7:
-      /* code */ Application_SmartRobotCarxxx0.Functional_Mode = ObstacleAvoidance_mode;
+    case 7:
+      Application_SmartRobotCarxxx0.Functional_Mode = ObstacleAvoidance_mode;
       break;
-    case /* constant-expression */ 8:
-      /* code */ Application_SmartRobotCarxxx0.Functional_Mode = Follow_mode;
+    case 8:
+      Application_SmartRobotCarxxx0.Functional_Mode = Follow_mode;
       break;
-    case /* constant-expression */ 9:
-      /* code */ if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode) //调节适配循迹模块敏感数据段响应
+    case 9:
+      // 调节适配循迹模块敏感数据段响应 - Adjust the sensitive data segment response of adaptive tracking module
+      if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode)
       {
         TrackingDetection_S += 10;
         if (TrackingDetection_S > 600)
@@ -1805,7 +1808,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
   }
 }
 
-/*串口数据解析 - Mode control sequence*/
+// 串口数据解析 - Serial data analysis
 void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 {
   static String SerialPortData = "";
@@ -1814,16 +1817,17 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
   {
     while (c != '}' && Serial.available() > 0)
     {
-      // while (Serial.available() == 0)//强行等待一帧数据完成接收
-      //   ;
       c = Serial.read();
-      SerialPortData += (char)c;
+      // Skip newline and carriage return.
+      if (c != '\n' && c != '\r') {
+        SerialPortData += (char)c;
+      }
     }
   }
-  if (c == '}') //数据帧尾部校验
+  if (c == '}') // 数据帧尾部校验 - Data frame tail check.
   {
 #if _Test_print
-    Serial.println(SerialPortData);
+    Serial.println("Received: " + SerialPortData);
 #endif
     if (true == SerialPortData.equals("{f}") || true == SerialPortData.equals("{b}") || true == SerialPortData.equals("{l}") || true == SerialPortData.equals("{r}"))
     {
@@ -1836,24 +1840,25 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
       SerialPortData = "";
       return;
     }
-    StaticJsonDocument<200> doc;                                       //声明一个JsonDocument对象
-    DeserializationError error = deserializeJson(doc, SerialPortData); //反序列化JSON数据
+    StaticJsonDocument<200> doc;                                       // 声明一个JsonDocument对象 - Declare a JsonDocument object.
+    DeserializationError error = deserializeJson(doc, SerialPortData); // 反序列化JSON数据 - Deserialize JSON data.
     SerialPortData = "";
     if (error)
     {
-      //Serial.println("error:deserializeJson");
+      Serial.println("error:deserializeJson");
       return;
     }
-    else if (!error) //检查反序列化是否成功
+    else if (!error) // 检查反序列化是否成功 - Check whether the deserialization is successful.
     {
       int control_mode_N = doc["N"];
       char *temp = doc["H"];
-      CommandSerialNumber = temp; //获取新命令的序号
+      CommandSerialNumber = temp; // 获取新命令的序号 - Get the serial number of the new command.
 
-      /*以下代码块请结合通讯协议V.docx 查看*/
+      // 以下代码块请结合通讯协议V.docx 查看
+      //Please view the following code blocks in conjunction with the communication protocol V.docx
       switch (control_mode_N)
       {
-      case 1: /*<命令：N 1> 电机控制模式 */
+      case 1: // <命令：N 1> 电机控制模式 - <Command: N 1> motor control mode
         Application_SmartRobotCarxxx0.Functional_Mode = CMD_MotorControl;
         CMD_is_MotorSelection = doc["D1"];
         CMD_is_MotorSpeed = doc["D2"];
@@ -1864,8 +1869,8 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 #endif
         break;
 
-      case 2:                                                                     /*<命令：N 2> */
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_CarControl_TimeLimit; /*小车方向控制：有时间限定模式*/
+      case 2: // <命令：N 2> 小车方向控制：有时间限定模式 - <Command: N 2> Car direction control: time limited mode
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_CarControl_TimeLimit;
         CMD_is_CarDirection = doc["D1"];
         CMD_is_CarSpeed = doc["D2"];
         CMD_is_CarTimer = doc["T"];
@@ -1875,8 +1880,8 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 #endif
         break;
 
-      case 3:                                                                       /*<命令：N 3> */
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_CarControl_NoTimeLimit; /*小车方向控制：无时间限定模式*/
+      case 3: // <命令：N 3> 小车方向控制：无时间限定模式 - <Command: N 3> Car direction control: no time limit mode
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_CarControl_NoTimeLimit;
         CMD_is_CarDirection = doc["D1"];
         CMD_is_CarSpeed = doc["D2"];
 #if _is_print
@@ -1884,24 +1889,24 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 #endif
         break;
 
-      case 4:                                                                   /*<命令：N 4> */
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_MotorControl_Speed; /*电机控制:控制转速模式*/
+      case 4: // <命令：N 4> 电机控制:控制转速模式 - <Command: N 4> Motor control: control speed mode
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_MotorControl_Speed;
         CMD_is_MotorSpeed_L = doc["D1"];
         CMD_is_MotorSpeed_R = doc["D2"];
 #if _is_print
         Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
-      case 5:                                                             /*<命令：N 5> */
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_ServoControl; /*编程控制舵机*/
+      case 5: // <命令：N 5> 编程控制舵机 - <Command: N 5> Program control servo
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_ServoControl;
         CMD_is_Servo = doc["D1"];
         CMD_is_Servo_angle = doc["D2"];
 #if _is_print
         Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
-      case 7:                                                                          /*<命令：N 7> */
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_LightingControl_TimeLimit; /*灯光控制:有时间限定模式*/
+      case 7: // <命令：N 7> 灯光控制:有时间限定模式 - <Command: N 7> Light control: time limited mode
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_LightingControl_TimeLimit;
 
         CMD_is_LightingSequence = doc["D1"]; //Lighting (Left, front, right, back and center)
         CMD_is_LightingColorValue_R = doc["D2"];
@@ -1914,8 +1919,8 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 #endif
         break;
 
-      case 8:                                                                            /*<命令：N 8> */
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_LightingControl_NoTimeLimit; /*灯光控制:无时间限定模式*/
+      case 8: // <命令：N 8> 灯光控制:无时间限定模式 - <Command: N 8> Light control: no time limit mode
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_LightingControl_NoTimeLimit;
 
         CMD_is_LightingSequence = doc["D1"]; //Lighting (Left, front, right, back and center)
         CMD_is_LightingColorValue_R = doc["D2"];
@@ -1926,14 +1931,14 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 #endif
         break;
 
-      case 21: /*<命令：N 21>：超声波模块:测距 */
+      case 21: // <命令：N 21>：超声波模块:测距 - <Command: N 21>: Ultrasonic Module: Ranging
         CMD_UltrasoundModuleStatus_xxx0(doc["D1"]);
 #if _is_print
         //Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
-      case 22: /*<命令：N 22>：红外模块：寻迹 */
+      case 22: // <命令：N 22>：红外模块：寻迹 - <Command: N 22>: Infrared Module: Tracking
         CMD_TraceModuleStatus_xxx0(doc["D1"]);
 #if _is_print
         //Serial.print('{' + CommandSerialNumber + "_ok}");
@@ -1955,21 +1960,21 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         }
         break;
 
-      case 110:                                                                                 /*<命令：N 110> */
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_ClearAllFunctions_Programming_mode; /*清除功能:进入编程模式*/
+      case 110: // <命令：N 110> 清除功能:进入编程模式 - <Command: N 110> Clear function: enter programming mode
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_ClearAllFunctions_Programming_mode;
 #if _is_print
         Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
-      case 100:                                                                             /*<命令：N 100> */
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_ClearAllFunctions_Standby_mode; /*清除功能：进入空闲模式*/
+      case 100: // <命令：N 100> 清除功能：进入空闲模式 - <Command: N 100> Clear function: enter idle mode
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_ClearAllFunctions_Standby_mode;
 #if _is_print
         Serial.print("{ok}");
         //Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
-      case 101: /*<命令：N 101> :遥控切换命令*/
+      case 101: // <命令：N 101> :遥控切换命令 - <Command: N 101>: Remote control switching command
         if (1 == doc["D1"])
         {
           Application_SmartRobotCarxxx0.Functional_Mode = TraceBased_mode;
@@ -1989,7 +1994,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 #endif
         break;
 
-      case 105: /*<命令：N 105> :FastLED亮度调节控制命令*/
+      case 105: // <命令：N 105> :FastLED亮度调节控制命令 - <Command: N 105>: FastLED brightness adjustment control command
         if (1 == doc["D1"] && (CMD_is_FastLED_setBrightness < 250))
         {
           CMD_is_FastLED_setBrightness += 5;
@@ -2000,13 +2005,13 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         }
         FastLED.setBrightness(CMD_is_FastLED_setBrightness);
 
-#if _Test_print
+#if _is_print
         //Serial.print('{' + CommandSerialNumber + "_ok}");
         Serial.print("{ok}");
 #endif
         break;
 
-      case 106: /*<命令：N 106> */
+      case 106: // <命令：N 106> - <Command: N 106> Camera rotation
       {
         uint8_t temp_Set_Servo = doc["D1"];
         if (temp_Set_Servo > 5 || temp_Set_Servo < 1)
@@ -2019,7 +2024,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         Serial.print("{ok}");
 #endif
         break;
-      case 102: /*<命令：N 102> :摇杆控制命令 - Joystick control command */
+      case 102: // <命令：N 102> :摇杆控制命令 - <Command: N 102>: Joystick control command
         Application_SmartRobotCarxxx0.Functional_Mode = Rocker_mode;
         Rocker_temp = doc["D1"];
 
