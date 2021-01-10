@@ -10,8 +10,8 @@
 #include <hardwareSerial.h>
 #include <stdio.h>
 #include <string.h>
-#include "ApplicationFunctionSet_xxx0.h"
 #include "DeviceDriverSet_xxx0.h"
+#include "ApplicationFunctionSet_xxx0.h"
 
 #include "ArduinoJson-v6.11.1.h" //ArduinoJson
 #include "MPU6050_getdata.h"
@@ -21,7 +21,7 @@
 
 ApplicationFunctionSet Application_FunctionSet;
 
-/*硬件设备成员对象序列*/
+// 硬件设备成员对象序列 - Hardware device member object sequence
 MPU6050_getdata AppMPU6050getdata;
 DeviceDriverSet_RBGLED AppRBG_LED;
 DeviceDriverSet_Key AppKey;
@@ -68,22 +68,22 @@ enum SmartRobotCarMotionControl
 /*模式控制序列 - Mode control sequence*/
 enum SmartRobotCarFunctionalModel
 {
-  Standby_mode,           /*空闲模式*/
-  TraceBased_mode,        /*循迹模式*/
-  ObstacleAvoidance_mode, /*避障模式*/
-  Follow_mode,            /*跟随模式*/
-  Rocker_mode,            /*摇杆模式*/
+  Standby_mode,                           // 空闲模式 - Idle mode
+  TraceBased_mode,                        // 循迹模式 - Tracking mode
+  ObstacleAvoidance_mode,                 // 避障模式 - Obstacle Avoidance Mode
+  Follow_mode,                            // 跟随模式 - Follow mode
+  Rocker_mode,                            // 摇杆模式 - Joystick mode
   CMD_inspect,
-  CMD_Programming_mode,                   /*编程模式*/
-  CMD_ClearAllFunctions_Standby_mode,     /*清除所有功能：进入空闲模式*/
-  CMD_ClearAllFunctions_Programming_mode, /*清除所有功能：进入编程模式*/
-  CMD_MotorControl,                       /*电机控制模式*/
-  CMD_CarControl_TimeLimit,               /*小车方向控制：有时间限定模式*/
-  CMD_CarControl_NoTimeLimit,             /*小车方向控制：无时间限定模式*/
-  CMD_MotorControl_Speed,                 /*电机控制:控制转速模式*/
-  CMD_ServoControl,                       /*舵机控制:模式*/
-  CMD_LightingControl_TimeLimit,          /*灯光控制:模式*/
-  CMD_LightingControl_NoTimeLimit,        /*灯光控制:模式*/
+  CMD_Programming_mode,                   // 编程模式 - Programming mode
+  CMD_ClearAllFunctions_Standby_mode,     // 清除所有功能：进入空闲模式 - Clear all functions: enter idle mode
+  CMD_ClearAllFunctions_Programming_mode, // 清除所有功能：进入编程模式 - Clear all functions: enter programming mode
+  CMD_MotorControl,                       // 电机控制模式 - Motor control mode
+  CMD_CarControl_TimeLimit,               // 小车方向控制：有时间限定模式 - Car direction control: time limited mode
+  CMD_CarControl_NoTimeLimit,             // 小车方向控制：无时间限定模式 - Car direction control: no time limit mode
+  CMD_MotorControl_Speed,                 // 电机控制:控制转速模式 - Motor control: control speed mode
+  CMD_ServoControl,                       // 舵机控制:模式  - Servo control: mode
+  CMD_LightingControl_TimeLimit,          // 灯光控制:模式 - Lighting control: mode
+  CMD_LightingControl_NoTimeLimit,        // 灯光控制:模式 - Lighting control: mode
 
 };
 
@@ -252,9 +252,7 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
   }
   switch (direction)
   {
-  case /* constant-expression */
-      Forward:
-    /* code */
+  case Forward:
     if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode)
     {
       AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_just, /*speed_A*/ speed,
@@ -268,8 +266,7 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
     }
 
     break;
-  case /* constant-expression */ Backward:
-    /* code */
+  case Backward:
     if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode)
     {
       AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_back, /*speed_A*/ speed,
@@ -283,44 +280,37 @@ static void ApplicationFunctionSet_SmartRobotCarMotionControl(SmartRobotCarMotio
     }
 
     break;
-  case /* constant-expression */ Left:
-    /* code */
+  case Left:
     directionRecord = 3;
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_just, /*speed_A*/ speed,
                                            /*direction_B*/ direction_back, /*speed_B*/ speed, /*controlED*/ control_enable); //Motor control
     break;
-  case /* constant-expression */ Right:
-    /* code */
+  case Right:
     directionRecord = 4;
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_back, /*speed_A*/ speed,
                                            /*direction_B*/ direction_just, /*speed_B*/ speed, /*controlED*/ control_enable); //Motor control
     break;
-  case /* constant-expression */ LeftForward:
-    /* code */
+  case LeftForward:
     directionRecord = 5;
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_just, /*speed_A*/ speed,
                                            /*direction_B*/ direction_just, /*speed_B*/ speed / 2, /*controlED*/ control_enable); //Motor control
     break;
-  case /* constant-expression */ LeftBackward:
-    /* code */
+  case LeftBackward:
     directionRecord = 6;
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_back, /*speed_A*/ speed,
                                            /*direction_B*/ direction_back, /*speed_B*/ speed / 2, /*controlED*/ control_enable); //Motor control
     break;
-  case /* constant-expression */ RightForward:
-    /* code */
+  case RightForward:
     directionRecord = 7;
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_just, /*speed_A*/ speed / 2,
                                            /*direction_B*/ direction_just, /*speed_B*/ speed, /*controlED*/ control_enable); //Motor control
     break;
-  case /* constant-expression */ RightBackward:
-    /* code */
+  case RightBackward:
     directionRecord = 8;
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_back, /*speed_A*/ speed / 2,
                                            /*direction_B*/ direction_back, /*speed_B*/ speed, /*controlED*/ control_enable); //Motor control
     break;
-  case /* constant-expression */ stop_it:
-    /* code */
+  case stop_it:
     directionRecord = 9;
     AppMotor.DeviceDriverSet_Motor_control(/*direction_A*/ direction_void, /*speed_A*/ 0,
                                            /*direction_B*/ direction_void, /*speed_B*/ 0, /*controlED*/ control_enable); //Motor control
@@ -441,44 +431,34 @@ void ApplicationFunctionSet::ApplicationFunctionSet_RGB(void)
   {
     switch (temp)
     {
-    case /* constant-expression */ 0 ... 49:
-      /* code */
+    case 0 ... 49:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Red);
       break;
-    case /* constant-expression */ 50 ... 99:
-      /* code */
+    case 50 ... 99:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Black);
       break;
-    case /* constant-expression */ 100 ... 149:
-      /* code */
+    case 100 ... 149:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Red);
       break;
-    case /* constant-expression */ 150 ... 199:
-      /* code */
+    case 150 ... 199:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Black);
       break;
-    case /* constant-expression */ 200 ... 249:
-      /* code */
+    case 200 ... 249:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Red);
       break;
-    case /* constant-expression */ 250 ... 299:
-      /* code */
+    case 250 ... 299:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Red);
       break;
-    case /* constant-expression */ 300 ... 349:
-      /* code */
+    case 300 ... 349:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Black);
       break;
-    case /* constant-expression */ 350 ... 399:
-      /* code */
+    case 350 ... 399:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Red);
       break;
-    case /* constant-expression */ 400 ... 449:
-      /* code */
+    case 400 ... 449:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Black);
       break;
-    case /* constant-expression */ 450 ... 499:
-      /* code */
+    case 450 ... 499:
       AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Red);
       break;
     default:
@@ -489,8 +469,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_RGB(void)
   {
     switch (Application_SmartRobotCarxxx0.Functional_Mode) //Act on 模式控制序列 - Mode control sequence
     {
-    case /* constant-expression */ Standby_mode:
-      /* code */
+    case Standby_mode:
       {
         if (VoltageDetectionStatus == true)
         {
@@ -529,31 +508,26 @@ void ApplicationFunctionSet::ApplicationFunctionSet_RGB(void)
         }
       }
       break;
-    case /* constant-expression */ CMD_Programming_mode:
-      /* code */
+    case CMD_Programming_mode:
       {
       }
       break;
-    case /* constant-expression */ TraceBased_mode:
-      /* code */
+    case TraceBased_mode:
       {
         AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Green);
       }
       break;
-    case /* constant-expression */ ObstacleAvoidance_mode:
-      /* code */
+    case ObstacleAvoidance_mode:
       {
         AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Yellow);
       }
       break;
-    case /* constant-expression */ Follow_mode:
-      /* code */
+    case Follow_mode:
       {
         AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Blue);
       }
       break;
-    case /* constant-expression */ Rocker_mode:
-      /* code */
+    case Rocker_mode:
       {
         AppRBG_LED.DeviceDriverSet_RBGLED_xxx(0 /*Duration*/, 2 /*Traversal_Number*/, CRGB::Violet);
       }
@@ -1683,25 +1657,19 @@ void ApplicationFunctionSet::ApplicationFunctionSet_KeyCommand(void)
   static uint8_t temp_keyValue = keyValue_Max;
   AppKey.DeviceDriverSet_key_Get(&get_keyValue);
 
-  if (temp_keyValue != get_keyValue)
-  {
+  if (temp_keyValue != get_keyValue) {
     temp_keyValue = get_keyValue;
-    switch (get_keyValue)
-    {
-    case /* constant-expression */ 1:
-      /* code */
+    switch (get_keyValue) {
+    case 1:
       Application_SmartRobotCarxxx0.Functional_Mode = TraceBased_mode;
       break;
-    case /* constant-expression */ 2:
-      /* code */
+    case 2:
       Application_SmartRobotCarxxx0.Functional_Mode = ObstacleAvoidance_mode;
       break;
-    case /* constant-expression */ 3:
-      /* code */
+    case 3:
       Application_SmartRobotCarxxx0.Functional_Mode = Follow_mode;
       break;
-    case /* constant-expression */ 4:
-      /* code */
+    case 4:
       Application_SmartRobotCarxxx0.Functional_Mode = Standby_mode;
       break;
     default:
@@ -1764,14 +1732,14 @@ void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
       }
 
       break;
-    case /* constant-expression */ 10:
-      /* code */ if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode)
+    case 10:
+      if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode)
       {
         TrackingDetection_S = 250;
       }
       break;
-    case /* constant-expression */ 11:
-      /* code */ if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode)
+    case 11:
+      if (Application_SmartRobotCarxxx0.Functional_Mode == TraceBased_mode)
       {
         TrackingDetection_S -= 10;
         if (TrackingDetection_S > 600)
@@ -1812,7 +1780,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
 void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
 {
   static String SerialPortData = "";
-  uint8_t c = "";
+  char c = ' ';
   if (Serial.available() > 0)
   {
     while (c != '}' && Serial.available() > 0)
