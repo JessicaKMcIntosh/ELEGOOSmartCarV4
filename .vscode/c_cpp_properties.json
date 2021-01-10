@@ -25,7 +25,7 @@
                     "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\**",
                     "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\**",
                     "C:\\Program Files (x86)\\Arduino\\libraries"
-                    ],
+                ],
                 "limitSymbolsToIncludedHeaders": true
             },
             "intelliSenseMode": "msvc-x64",
