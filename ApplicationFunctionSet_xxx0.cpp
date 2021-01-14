@@ -1844,7 +1844,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         CMD_is_CarTimer = doc["T"];
         Application_SmartRobotCarxxx0.CMD_CarControl_Millis = millis();
 #if _is_print
-        //Serial.print('{' + CommandSerialNumber + "_ok}");
+        Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
@@ -1883,7 +1883,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         CMD_is_LightingTimer = doc["T"];
         Application_SmartRobotCarxxx0.CMD_LightingControl_Millis = millis();
 #if _is_print
-        //Serial.print('{' + CommandSerialNumber + "_ok}");
+        // Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
@@ -1902,14 +1902,14 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
       case 21: // <命令：N 21>：超声波模块:测距 - <Command: N 21>: Ultrasonic Module: Ranging
         CMD_UltrasoundModuleStatus_xxx0(doc["D1"]);
 #if _is_print
-        //Serial.print('{' + CommandSerialNumber + "_ok}");
+        // Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
       case 22: // <命令：N 22>：红外模块：寻迹 - <Command: N 22>: Infrared Module: Tracking
         CMD_TraceModuleStatus_xxx0(doc["D1"]);
 #if _is_print
-        //Serial.print('{' + CommandSerialNumber + "_ok}");
+        // Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
@@ -1937,8 +1937,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
       case 100: // <命令：N 100> 清除功能：进入空闲模式 - <Command: N 100> Clear function: enter idle mode
         Application_SmartRobotCarxxx0.Functional_Mode = CMD_ClearAllFunctions_Standby_mode;
 #if _is_print
-        Serial.print("{ok}");
-        //Serial.print('{' + CommandSerialNumber + "_ok}");
+        Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
@@ -1957,8 +1956,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         }
 
 #if _is_print
-        Serial.print("{ok}");
-        //Serial.print('{' + CommandSerialNumber + "_ok}");
+        Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
@@ -1974,8 +1972,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         FastLED.setBrightness(CMD_is_FastLED_setBrightness);
 
 #if _is_print
-        //Serial.print('{' + CommandSerialNumber + "_ok}");
-        Serial.print("{ok}");
+        Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 
@@ -1988,8 +1985,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
       }
 
 #if _is_print
-        //Serial.print('{' + CommandSerialNumber + "_ok}");
-        Serial.print("{ok}");
+        Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
       case 102: // <命令：N 102> :摇杆控制命令 - <Command: N 102>: Joystick control command
@@ -2031,7 +2027,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
           break;
         }
 #if _is_print
-        // Serial.print('{' + CommandSerialNumber + "_ok}");
+        Serial.print('{' + CommandSerialNumber + "_ok}");
 #endif
         break;
 

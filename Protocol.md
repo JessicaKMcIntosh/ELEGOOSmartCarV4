@@ -33,7 +33,7 @@ For example `"H": "123"`.
   * **Note:** This is not documented in the communications protocol PDF file.
   * **Command:** `{ "H": "ID", "N": 2, "D1": DIRECTION, "D2": SPEED, "T": TIME }`
   * **Python:** `SmartCar.Commands.CarControlTime(direction, speed, time)`
-  * **Return:** No return.
+  * **Return:** `{ID_ok}`
   * **Parameters:**
     * **DIRECTION:** The rotation direction of the selected motor.
       * **1** - Turn left
@@ -94,7 +94,7 @@ For example `"H": "123"`.
 * **Function:** Switch the car mode.
   * **Command:** `{ "N": 101, "D1": MODE }`
   * **Python:** `SmartCar.Commands.SwitchMode(mode)`
-  * **Return:** No return.
+  * **Return:** `{ID_ok}`
   * **Parameters:**
     * **MODE:** - The mode to switch the car to.
       * **1** - Tracking mode.
@@ -106,14 +106,14 @@ For example `"H": "123"`.
 * **Function:** Clear all functions being executed.
   * **Command:** `{ "N": 100 }`
   * **Python:** `SmartCar.Commands.JoystickClear()`
-  * **Return:** `{ok}`
+  * **Return:** `{ID_ok}`
 
 ## Joystick movement command
 
 * **Function:** Make the car move in a certain direction at the default maximum speed.
   * **Command:** `{ "N": 102, "D1": DIRECTION, "D2": SPEED }`
   * **Python:** `SmartCar.Commands.JoystickMovement(direction)`
-  * **Return:** No return.
+  * **Return:** `{ID_ok}`.
   * **Parameters:**
     * **DIRECTION** - Direction of the car.
       * **1** - Go forward
@@ -143,7 +143,7 @@ For example `"H": "123"`.
   * **Note:** This is not documented in the communications protocol PDF file.
               From testing this command does not work.
   * **Command:** `{ "N": 105, "D1": ADJUSTMENT }`
-  * **Return:** No return.
+  * **Return:** `{ID_ok}`
   * **Parameters:**
     * **ADJUSTMENT** - The direction to adjust the brightness.
       * **1** - Adjust the brightness up by 5, to a maximum of 250.
@@ -154,7 +154,7 @@ For example `"H": "123"`.
 * **Function:** Set the rotation direction of the camera.
   * **Command:** `{ "N": 106, "D1": DIRECTION }`
   * **Python:** `SmartCar.Commands.CameraRotation(direction)`
-  * **Return:** No return.
+  * **Return:** `{ID_ok}`
   * **Parameters:**
     * **DIRECTION** - The rotation direction of the camera.
       * **1** - Turn up
