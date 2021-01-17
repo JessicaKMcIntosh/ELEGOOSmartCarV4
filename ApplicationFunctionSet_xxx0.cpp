@@ -729,7 +729,8 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Follow(void)
       return;
     }
     AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&ULTRASONIC_Get /*out*/);
-    if (false == function_xxx(ULTRASONIC_Get, 0, 20)) //前方 20 cm内无障碍物？
+    // 前方 20 cm内无障碍物？ - There are no obstacles within 20 cm ahead?
+    if (false == function_xxx(ULTRASONIC_Get, 0, 20))
     {
       ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
       static unsigned long time_Servo = 0;
@@ -911,11 +912,10 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Standby(void)
   }
 }
 
-/* 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/*
  * Begin:CMD
  * Graphical programming and command control module
- $ Elegoo & SmartRobot & 2020-06
+ * $ Elegoo & SmartRobot & 2020-06
 */
 
 void ApplicationFunctionSet::CMD_inspect_xxx0(void)
@@ -1205,22 +1205,37 @@ static void CMD_CarControl(uint8_t is_CarDirection, uint8_t is_CarSpeed)
 //   }
 // }
 
+/*
+  N2：指令
+  CMD模式：<车子控制> 接收并根据 APP端控制命令   执行对车的单方向驱动
+  有时间限定
+
+  Google Translate:
+  N2: instruction
+  CMD mode: <car control> receives and executes unidirectional driving of the car according to the APP control command
+  Time limit
+*/
 void ApplicationFunctionSet::CMD_CarControlTimeLimit_xxx0(void)
 {
   static boolean CarControl = false;
   static boolean CarControl_TE = false; // 还有时间标志 - There is a time stamp
   static boolean CarControl_return = false;
-  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_CarControl_TimeLimit) //进入车子有时间限定控制模式
+  // 进入车子有时间限定控制模式 - Time-limited control mode when entering the car
+  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_CarControl_TimeLimit)
   {
     CarControl = true;
-    if (CMD_is_CarTimer != 0) //#1设定时间不为..时 (空)
+    // #1设定时间不为..时 (空) - #1 Set time is not: time (empty)
+    if (CMD_is_CarTimer != 0)
     {
-      if ((millis() - Application_SmartRobotCarxxx0.CMD_CarControl_Millis) > (CMD_is_CarTimer)) //判断时间戳
+      // 判断时间戳 - Judgment timestamp
+      if ((millis() - Application_SmartRobotCarxxx0.CMD_CarControl_Millis) > (CMD_is_CarTimer))
       {
         CarControl_TE = true;
         ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
 
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode; /*进入编程模式提示符<等待下一组控制命令的到来>*/
+        // 进入编程模式提示符<等待下一组控制命令的到来>
+        // Enter the programming mode prompt <waiting for the arrival of the next set of control commands>
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode;
         if (CarControl_return == false)
         {
 
@@ -1272,10 +1287,22 @@ void ApplicationFunctionSet::CMD_CarControlTimeLimit_xxx0(void)
 //     }
 //   }
 // }
+
+/*
+  N3：指令
+  CMD模式：<车子控制> 接收并根据 APP端控制命令   执行对车的单方向驱动
+  无时间限定
+
+  Google Translate:
+  N3: instruction
+  CMD mode: <car control> receives and executes unidirectional driving of the car according to the APP control command
+  No time limit
+*/
 void ApplicationFunctionSet::CMD_CarControlNoTimeLimit_xxx0(void)
 {
   static boolean CarControl = false;
-  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_CarControl_NoTimeLimit) //进入小车无时间限定控制模式
+  // 进入小车无时间限定控制模式 - Enter the trolley timeless control mode
+  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_CarControl_NoTimeLimit)
   {
     CarControl = true;
     CMD_CarControl(CMD_is_CarDirection, CMD_is_CarSpeed);
@@ -1363,7 +1390,9 @@ void ApplicationFunctionSet::CMD_ServoControl_xxx0(void)
   if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_ServoControl)
   {
     AppServo.DeviceDriverSet_Servo_controls(/*uint8_t Servo*/ CMD_is_Servo, /*unsigned int Position_angle*/ CMD_is_Servo_angle / 10);
-    Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode; /*进入编程模式提示符<等待下一组控制命令的到来>*/
+    // 进入编程模式提示符<等待下一组控制命令的到来>
+    // Enter the programming mode prompt <waiting for the arrival of the next set of control commands
+    Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode;
   }
 }
 /*
@@ -1380,19 +1409,24 @@ void ApplicationFunctionSet::CMD_LightingControlTimeLimit_xxx0(uint8_t is_Lighti
                                                                uint32_t is_LightingTimer)
 {
   static boolean LightingControl = false;
-  static boolean LightingControl_TE = false; //还有时间标志
+  static boolean LightingControl_TE = false; //还有时间标志 - There is a time stamp
   static boolean LightingControl_return = false;
 
-  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_LightingControl_TimeLimit) //进入灯光有时间限定控制模式
+  // 进入灯光有时间限定控制模式 - Enter the light control mode with time limit
+  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_LightingControl_TimeLimit)
   {
     LightingControl = true;
-    if (is_LightingTimer != 0) //#1设定时间不为..时 (空)
+    // #1设定时间不为..时 (空) - #1 Set time is not: time (empty)
+    if (is_LightingTimer != 0)
     {
-      if ((millis() - Application_SmartRobotCarxxx0.CMD_LightingControl_Millis) > (is_LightingTimer)) //判断时间戳
+      // 判断时间戳 - Judgment timestamp
+      if ((millis() - Application_SmartRobotCarxxx0.CMD_LightingControl_Millis) > (is_LightingTimer))
       {
         LightingControl_TE = true;
         FastLED.clear(true);
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode; /*进入编程模式提示符<等待下一组控制命令的到来>*/
+        // 进入编程模式提示符<等待下一组控制命令的到来>
+        // Enter the programming mode prompt <waiting for the arrival of the next set of control commands>
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode;
         if (LightingControl_return == false)
         {
 
@@ -1404,7 +1438,7 @@ void ApplicationFunctionSet::CMD_LightingControlTimeLimit_xxx0(uint8_t is_Lighti
       }
       else
       {
-        LightingControl_TE = false; //还有时间
+        LightingControl_TE = false; // 还有时间 - Still time
         LightingControl_return = false;
       }
     }
@@ -1426,19 +1460,24 @@ void ApplicationFunctionSet::CMD_LightingControlTimeLimit_xxx0(uint8_t is_Lighti
 void ApplicationFunctionSet::CMD_LightingControlTimeLimit_xxx0(void)
 {
   static boolean LightingControl = false;
-  static boolean LightingControl_TE = false; //还有时间标志
+  static boolean LightingControl_TE = false; // 还有时间标志 - There is a time stamp
   static boolean LightingControl_return = false;
 
-  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_LightingControl_TimeLimit) //进入灯光有时间限定控制模式
+  // 进入灯光有时间限定控制模式 - Enter the light control mode with time limit
+  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_LightingControl_TimeLimit)
   {
     LightingControl = true;
-    if (CMD_is_LightingTimer != 0) //#1设定时间不为..时 (空)
+    // #1设定时间不为..时 (空) - #1Set time is not: time (empty)
+    if (CMD_is_LightingTimer != 0)
     {
-      if ((millis() - Application_SmartRobotCarxxx0.CMD_LightingControl_Millis) > (CMD_is_LightingTimer)) //判断时间戳
+      // 判断时间戳 - Judgment timestamp
+      if ((millis() - Application_SmartRobotCarxxx0.CMD_LightingControl_Millis) > (CMD_is_LightingTimer))
       {
         LightingControl_TE = true;
         FastLED.clear(true);
-        Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode; /*进入编程模式提示符<等待下一组控制命令的到来>*/
+        // 进入编程模式提示符<等待下一组控制命令的到来>
+        // Enter the programming mode prompt <waiting for the arrival of the next set of control commands>
+        Application_SmartRobotCarxxx0.Functional_Mode = CMD_Programming_mode;
         if (LightingControl_return == false)
         {
 
@@ -1450,7 +1489,7 @@ void ApplicationFunctionSet::CMD_LightingControlTimeLimit_xxx0(void)
       }
       else
       {
-        LightingControl_TE = false; //还有时间
+        LightingControl_TE = false; // 还有时间 - Still time
         LightingControl_return = false;
       }
     }
@@ -1471,13 +1510,18 @@ void ApplicationFunctionSet::CMD_LightingControlTimeLimit_xxx0(void)
 }
 /*
   N8:指令
-   CMD模式：<灯光控制>
-   无时间限定
+  CMD模式：<灯光控制>
+  无时间限定
+
+  N8: instruction
+  CMD mode: <light control>
+  No time limit
 */
 void ApplicationFunctionSet::CMD_LightingControlNoTimeLimit_xxx0(uint8_t is_LightingSequence, uint8_t is_LightingColorValue_R, uint8_t is_LightingColorValue_G, uint8_t is_LightingColorValue_B)
 {
   static boolean LightingControl = false;
-  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_LightingControl_NoTimeLimit) //进入灯光无时间限定控制模式
+  // 进入灯光无时间限定控制模式 - Enter the light control mode without time limit
+  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_LightingControl_NoTimeLimit)
   {
     LightingControl = true;
     CMD_Lighting(is_LightingSequence, is_LightingColorValue_R, is_LightingColorValue_G, is_LightingColorValue_B);
@@ -1493,7 +1537,8 @@ void ApplicationFunctionSet::CMD_LightingControlNoTimeLimit_xxx0(uint8_t is_Ligh
 void ApplicationFunctionSet::CMD_LightingControlNoTimeLimit_xxx0(void)
 {
   static boolean LightingControl = false;
-  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_LightingControl_NoTimeLimit) //进入灯光无时间限定控制模式
+  // 进入灯光无时间限定控制模式 - Enter the light control mode without time limit
+  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_LightingControl_NoTimeLimit)
   {
     LightingControl = true;
     CMD_Lighting(CMD_is_LightingSequence, CMD_is_LightingColorValue_R, CMD_is_LightingColorValue_G, CMD_is_LightingColorValue_B);
@@ -1510,10 +1555,16 @@ void ApplicationFunctionSet::CMD_LightingControlNoTimeLimit_xxx0(void)
 /*
   N100/N110:指令
   CMD模式：清除所有功能
+
+  Google Translate:
+  N100/N110: Command
+  CMD mode: clear all functions
 */
 void ApplicationFunctionSet::CMD_ClearAllFunctions_xxx0(void)
 {
-  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_ClearAllFunctions_Standby_mode) //清除所有功能：进入空闲模式    N100:指令
+  // 清除所有功能：进入空闲模式    N100:指令
+  // Clear all functions: enter idle mode N100: command
+  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_ClearAllFunctions_Standby_mode)
   {
     ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
     FastLED.clear(true);
@@ -1521,7 +1572,9 @@ void ApplicationFunctionSet::CMD_ClearAllFunctions_xxx0(void)
     Application_SmartRobotCarxxx0.Motion_Control = stop_it;
     Application_SmartRobotCarxxx0.Functional_Mode = Standby_mode;
   }
-  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_ClearAllFunctions_Programming_mode) //清除所有功能：进入编程模式     N110:指令
+  // 清除所有功能：进入编程模式     N110:指令
+  // Clear all functions: enter programming mode N110: instruction
+  if (Application_SmartRobotCarxxx0.Functional_Mode == CMD_ClearAllFunctions_Programming_mode)
   {
 
     ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
@@ -1536,12 +1589,19 @@ void ApplicationFunctionSet::CMD_ClearAllFunctions_xxx0(void)
   N21:指令
   CMD模式：超声波模块处理 接收并根据 APP端控制命令   反馈超声波状态及数据
   输入：
+
+  Google Translate:
+  N21: Command
+  CMD mode: Ultrasonic module processing, receiving and feeding back the
+  ultrasonic status and data according to APP control commands enter:
 */
 void ApplicationFunctionSet::CMD_UltrasoundModuleStatus_xxx0(uint8_t is_get)
 {
-  AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&UltrasoundData_cm /*out*/); //超声波数据
+  AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&UltrasoundData_cm /*out*/); //超声波数据 - Ultrasound data
   UltrasoundDetectionStatus = function_xxx(UltrasoundData_cm, 0, ObstacleDetection);
-  if (1 == is_get) //超声波  is_get Start     true：有障碍物 / false:无障碍物
+  // 超声波  is_get Start     true：有障碍物 / false:无障碍物
+  // Ultrasonic is_get Start true: Obstacles / false: Obstacles
+  if (1 == is_get)
   {
     if (true == UltrasoundDetectionStatus)
     {
@@ -1556,7 +1616,7 @@ void ApplicationFunctionSet::CMD_UltrasoundModuleStatus_xxx0(uint8_t is_get)
 #endif
     }
   }
-  else if (2 == is_get) //超声波 is_get data
+  else if (2 == is_get) // 超声波 is_get data - Ultrasound is_get data
   {
     char toString[10];
     sprintf(toString, "%d", UltrasoundData_cm);
@@ -1757,7 +1817,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
       Application_SmartRobotCarxxx0.Functional_Mode = Standby_mode;
       break;
     }
-    /*方向控制部分实现时长约束控制*/
+    // 方向控制部分实现时长约束控制 - The direction control part realizes time constraint control
     if (IRrecv_button < 5)
     {
       Application_SmartRobotCarxxx0.Functional_Mode = Rocker_mode;
@@ -1803,7 +1863,8 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
       SerialPortData = "";
       return;
     }
-    if (true == SerialPortData.equals("{Factory}") || true == SerialPortData.equals("{WA_NO}") || true == SerialPortData.equals("{WA_OK}")) //避让测试架
+    // 避让测试架 - Avoidance test stand
+    if (true == SerialPortData.equals("{Factory}") || true == SerialPortData.equals("{WA_NO}") || true == SerialPortData.equals("{WA_OK}"))
     {
       SerialPortData = "";
       return;
