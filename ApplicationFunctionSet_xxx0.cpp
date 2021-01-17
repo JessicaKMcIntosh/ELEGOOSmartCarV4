@@ -32,15 +32,17 @@ DeviceDriverSet_Motor AppMotor;
 DeviceDriverSet_ULTRASONIC AppULTRASONIC;
 DeviceDriverSet_Servo AppServo;
 DeviceDriverSet_IRrecv AppIRrecv;
-/*f(x) int */
+
+// Return true if test is between low and high
 static boolean
-function_xxx(long x, long s, long e) //f(x)
+is_between(long test, long low, long high)
 {
-  if (s <= x && x <= e)
+  if (low <= test && test <= high)
     return true;
   else
     return false;
 }
+
 static void
 delay_xxx(uint16_t _ms)
 {
@@ -356,16 +358,16 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SensorDataUpdate(void)
   // { /*避障状态更新*/
   //   Obstacle avoidance status update
   //   AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&UltrasoundData_cm /*out*/);
-  //   UltrasoundDetectionStatus = function_xxx(UltrasoundData_cm, 0, ObstacleDetection);
+  //   UltrasoundDetectionStatus = is_between(UltrasoundData_cm, 0, ObstacleDetection);
   // }
 
   { /*R循迹状态更新 - R tracking status update*/
     TrackingData_R = AppITR20001.DeviceDriverSet_ITR20001_getAnaloguexxx_R();
-    TrackingDetectionStatus_R = function_xxx(TrackingData_R, TrackingDetection_S, TrackingDetection_E);
+    TrackingDetectionStatus_R = is_between(TrackingData_R, TrackingDetection_S, TrackingDetection_E);
     TrackingData_M = AppITR20001.DeviceDriverSet_ITR20001_getAnaloguexxx_M();
-    TrackingDetectionStatus_M = function_xxx(TrackingData_M, TrackingDetection_S, TrackingDetection_E);
+    TrackingDetectionStatus_M = is_between(TrackingData_M, TrackingDetection_S, TrackingDetection_E);
     TrackingData_L = AppITR20001.DeviceDriverSet_ITR20001_getAnaloguexxx_L();
-    TrackingDetectionStatus_L = function_xxx(TrackingData_L, TrackingDetection_S, TrackingDetection_E);
+    TrackingDetectionStatus_L = is_between(TrackingData_L, TrackingDetection_S, TrackingDetection_E);
     //ITR20001 检测小车是否离开地面 - Detects whether the car is off the ground
     ApplicationFunctionSet_SmartRobotCarLeaveTheGround();
   }
@@ -427,7 +429,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_RGB(void)
     }
   }
   unsigned long temp = millis() - getAnalogue_time;
-  if (function_xxx((temp), 0, 500) && VoltageDetectionStatus == true)
+  if (is_between((temp), 0, 500) && VoltageDetectionStatus == true)
   {
     switch (temp)
     {
@@ -465,7 +467,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_RGB(void)
       break;
     }
   }
-  else if (((function_xxx((temp), 500, 3000)) && VoltageDetectionStatus == true) || VoltageDetectionStatus == false)
+  else if (((is_between((temp), 500, 3000)) && VoltageDetectionStatus == true) || VoltageDetectionStatus == false)
   {
     switch (Application_SmartRobotCarxxx0.Functional_Mode) //Act on 模式控制序列 - Mode control sequence
     {
@@ -576,7 +578,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Tracking(void)
     //       Serial.println(getAnaloguexxx_R);
     //     }
     // #endif
-    if (function_xxx(TrackingData_M, TrackingDetection_S, TrackingDetection_E))
+    if (is_between(TrackingData_M, TrackingDetection_S, TrackingDetection_E))
     {
       // 控制左右电机转动：实现匀速直行
       // Control the rotation of the left and right motors
@@ -585,7 +587,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Tracking(void)
       timestamp = true;
       BlindDetection = true;
     }
-    else if (function_xxx(TrackingData_R, TrackingDetection_S, TrackingDetection_E))
+    else if (is_between(TrackingData_R, TrackingDetection_S, TrackingDetection_E))
     {
       // 控制左右电机转动：前右
       // Control left and right motor rotation: front right
@@ -593,7 +595,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Tracking(void)
       timestamp = true;
       BlindDetection = true;
     }
-    else if (function_xxx(TrackingData_L, TrackingDetection_S, TrackingDetection_E))
+    else if (is_between(TrackingData_L, TrackingDetection_S, TrackingDetection_E))
     {
       // 控制左右电机转动：前左
       // Control left and right motor rotation: front left
@@ -610,15 +612,15 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Tracking(void)
         ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
       }
       /*Blind Detection*/
-      if ((function_xxx((millis() - MotorRL_time), 0, 200) || function_xxx((millis() - MotorRL_time), 1600, 2000)) && BlindDetection == true)
+      if ((is_between((millis() - MotorRL_time), 0, 200) || is_between((millis() - MotorRL_time), 1600, 2000)) && BlindDetection == true)
       {
         ApplicationFunctionSet_SmartRobotCarMotionControl(Right, 100);
       }
-      else if (((function_xxx((millis() - MotorRL_time), 200, 1600))) && BlindDetection == true)
+      else if (((is_between((millis() - MotorRL_time), 200, 1600))) && BlindDetection == true)
       {
         ApplicationFunctionSet_SmartRobotCarMotionControl(Left, 100);
       }
-      else if ((function_xxx((millis() - MotorRL_time), 3000, 3500))) // Blind Detection ...s ?
+      else if ((is_between((millis() - MotorRL_time), 3000, 3500))) // Blind Detection ...s ?
       {
         BlindDetection = false;
         ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
@@ -655,7 +657,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Obstacle(void)
     }
 
     AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&get_Distance /*out*/);
-    if (function_xxx(get_Distance, 0, 20))
+    if (is_between(get_Distance, 0, 20))
     {
       ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
 
@@ -665,7 +667,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Obstacle(void)
         delay_xxx(1);
         AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&get_Distance /*out*/);
 
-        if (function_xxx(get_Distance, 0, 20))
+        if (is_between(get_Distance, 0, 20))
         {
           ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
           if (5 == i)
@@ -699,7 +701,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Obstacle(void)
         }
       }
     }
-    else //if (function_xxx(get_Distance, 20, 50))
+    else //if (is_between(get_Distance, 20, 50))
     {
       ApplicationFunctionSet_SmartRobotCarMotionControl(Forward, 150);
     }
@@ -730,7 +732,7 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Follow(void)
     }
     AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&ULTRASONIC_Get /*out*/);
     // 前方 20 cm内无障碍物？ - There are no obstacles within 20 cm ahead?
-    if (false == function_xxx(ULTRASONIC_Get, 0, 20))
+    if (false == is_between(ULTRASONIC_Get, 0, 20))
     {
       ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
       static unsigned long time_Servo = 0;
@@ -1598,7 +1600,7 @@ void ApplicationFunctionSet::CMD_ClearAllFunctions_xxx0(void)
 void ApplicationFunctionSet::CMD_UltrasoundModuleStatus_xxx0(uint8_t is_get)
 {
   AppULTRASONIC.DeviceDriverSet_ULTRASONIC_Get(&UltrasoundData_cm /*out*/); //超声波数据 - Ultrasound data
-  UltrasoundDetectionStatus = function_xxx(UltrasoundData_cm, 0, ObstacleDetection);
+  UltrasoundDetectionStatus = is_between(UltrasoundData_cm, 0, ObstacleDetection);
   // 超声波  is_get Start     true：有障碍物 / false:无障碍物
   // Ultrasonic is_get Start true: Obstacles / false: Obstacles
   if (1 == is_get)
