@@ -10,10 +10,15 @@
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\standard",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\**",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\**",
-                "C:\\Program Files (x86)\\Arduino\\libraries"
+                "C:\\Program Files (x86)\\Arduino\\libraries",
+                "${env:HOME}/Library/Arduino15/packages/arduino/hardware/avr/1.8.2",
+                "${env:HOME}/Applications/Arduino.app/Contents/Java/libraries",
+                "${env:HOME}/Library/Arduino15/packages/arduino/tools",
+                "${env:HOME}/Documents/Arduino/Sketches/libraries"
             ],
             "forcedInclude": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
+                "${env:HOME}/Library/Arduino15/packages/arduino/hardware/avr/1.8.2/cores/arduino/Arduino.h"
             ],
             "browse": {
                 "path": [
@@ -24,7 +29,11 @@
                     "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\standard",
                     "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\**",
                     "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\**",
-                    "C:\\Program Files (x86)\\Arduino\\libraries"
+                    "C:\\Program Files (x86)\\Arduino\\libraries",
+                    "${env:HOME}/Library/Arduino15/packages/arduino/hardware/avr/1.8.2/**",
+                    "${env:HOME}/Applications/Arduino.app/Contents/Java/libraries/**",
+                    "${env:HOME}/Library/Arduino15/packages/arduino/tools/**",
+                    "${env:HOME}/Documents/Arduino/Sketches/libraries/**"
                 ],
                 "limitSymbolsToIncludedHeaders": true
             },
