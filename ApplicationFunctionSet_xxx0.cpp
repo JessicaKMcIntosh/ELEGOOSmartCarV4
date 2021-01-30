@@ -7,7 +7,7 @@
  * @FilePath:
  */
 #include <avr/wdt.h>
-#include <hardwareSerial.h>
+#include <HardwareSerial.h>
 #include <stdio.h>
 #include <string.h>
 #include "DeviceDriverSet_xxx0.h"
