@@ -11,33 +11,63 @@
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\**",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\**",
                 "C:\\Program Files (x86)\\Arduino\\libraries",
+                "/Users/jessica/Library/Arduino15/packages/arduino/hardware/avr/1.8.2/**",
+                "/Users/jessica/Applications/Arduino.app/Contents/Java/libraries/**",
+                "/Users/jessica/Documents/Arduino/Sketches/libraries/**",
+                "/Users/jessica/Library/Arduino15/packages/arduino/tools/**",
+                "/Applications/Arduino.app/Contents/Java/libraries/**"
+            ],
+            "forcedInclude": [
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
+                "/Users/jessica/Library/Arduino15/packages/arduino/hardware/avr/1.8.2/cores/arduino/Arduino.h"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "${env:HOMEPATH}\\Documents\\Arduino\\libraries",
+                    "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
+                    "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\include",
+                    "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\standard",
+                    "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries",
+                    "C:\\Program Files (x86)\\Arduino\\hardware\\tools",
+                    "C:\\Program Files (x86)\\Arduino\\libraries"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "intelliSenseMode": "gcc-x64",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "defines": [
+                "ARDUINO=10813",
+                "ARDUINO_AVR_UNO",
+                "ARDUINO_ARCH_AVR",
+                "USBCON",
+                "UBRRH"
+            ]
+        },
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}",
                 "${env:HOME}/Library/Arduino15/packages/arduino/hardware/avr/1.8.2",
-                "${env:HOME}/Applications/Arduino.app/Contents/Java/libraries",
+                "/Applications/Arduino.app/Contents/Java/libraries",
                 "${env:HOME}/Library/Arduino15/packages/arduino/tools",
                 "${env:HOME}/Documents/Arduino/Sketches/libraries"
             ],
             "forcedInclude": [
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h",
                 "${env:HOME}/Library/Arduino15/packages/arduino/hardware/avr/1.8.2/cores/arduino/Arduino.h"
             ],
             "browse": {
                 "path": [
                     "${workspaceFolder}",
-                    "${env:HOMEPATH}\\Documents\\Arduino\\libraries\\**",
-                    "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
-                    "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\avr\\avr\\include",
-                    "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\variants\\standard",
-                    "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\libraries\\**",
-                    "C:\\Program Files (x86)\\Arduino\\hardware\\tools\\**",
-                    "C:\\Program Files (x86)\\Arduino\\libraries",
-                    "${env:HOME}/Library/Arduino15/packages/arduino/hardware/avr/1.8.2/**",
-                    "${env:HOME}/Applications/Arduino.app/Contents/Java/libraries/**",
-                    "${env:HOME}/Library/Arduino15/packages/arduino/tools/**",
-                    "${env:HOME}/Documents/Arduino/Sketches/libraries/**"
+                    "${env:HOME}/Library/Arduino15/packages/arduino/hardware/avr/1.8.2",
+                    "/Applications/Arduino.app/Contents/Java/libraries",
+                    "${env:HOME}/Library/Arduino15/packages/arduino/tools",
+                    "${env:HOME}/Documents/Arduino/Sketches/libraries"
                 ],
                 "limitSymbolsToIncludedHeaders": true
             },
-            "intelliSenseMode": "msvc-x64",
+            "intelliSenseMode": "gcc-x64",
             "cStandard": "c11",
             "cppStandard": "c++17",
             "defines": [
