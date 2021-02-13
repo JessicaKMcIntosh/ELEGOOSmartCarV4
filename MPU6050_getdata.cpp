@@ -11,21 +11,11 @@
 #include "MPU6050.h"
 #include "Wire.h"
 #include "MPU6050_getdata.h"
-#include "MsTimer2.h"
 #include <stdio.h>
 #include <math.h>
 
 MPU6050 accelgyro;
 MPU6050_getdata MPU6050Getdata;
-
-// static void MsTimer2_MPU6050getdata(void)
-// {
-//   sei();
-//   int16_t ax, ay, az, gx, gy, gz;
-//   accelgyro.getMotion6(&ax, &ay, &az, &gx, &gy, &gz); //读取六轴原始数值
-//   float gyroz = -(gz - MPU6050Getdata.gzo) / 131 * 0.005f;
-//   MPU6050Getdata.yaw += gyroz;
-// }
 
 bool MPU6050_getdata::MPU6050_dveInit(void)
 {
